@@ -1,32 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layouts/layout}">
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
 
-<th:block layout:fragment="head"><title>Spring Boot</title>
-    <link th:href="@{/css/common.css}" rel="stylesheet"/>
-</th:block>
+<!--&lt;!&ndash; index.html 고유 스크립트 추가 &ndash;&gt;-->
+<th:block layout:fragment="script"> </th:block>
 
-<body>
-<th:block layout:fragment="header" th:include="@{/fragments/header}"/>
-
-<div layout:fragment="content" class="content">
-    <h2>This is Content</h2>
-
-
-    <table border="1">
+<div layout:fragment="content">
+    <table border="1" class="table">
         <tr>
-            <th>Home2</th>
+            <th>asdsadasdas</th>
         </tr>
         <th:block th:each="rl : ${T2}">
             <tr>
-                <td th:text="${ rl.getCom_phone() }"></td>
+                <td th:text="${ rl.getCom_title() }" th:if="${ rl.getCom_title() ne 'asdas' }"></td>
             </tr>
         </th:block>
     </table>
-
-
 </div>
-
-<th:block layout:fragment="footer" th:include="@{/fragments/footer}"/>
-</body>
 </html>
+<!--
+// model값 바로 가져오기
+//alert("[[${test}]]");-->

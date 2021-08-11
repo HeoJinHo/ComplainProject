@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+
+<th:block layout:fragment="head"><title>Spring Boot</title>
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+</th:block>
+
+<body>
+<th:block layout:fragment="header" th:include="@{/fragments/header}"/>
+
+<div layout:fragment="content" class="content">
+    <h2>This is Content</h2>
+
+
+    <table border="1">
+        <tr>
+            <th>Home2</th>
+        </tr>
+        <th:block th:each="rl : ${T2}">
+            <tr>
+                <td th:text="${ rl.getCom_phone() }"></td>
+            </tr>
+        </th:block>
+    </table>
+
+
+</div>
+
+<th:block layout:fragment="footer" th:include="@{/fragments/footer}"/>
+</body>
+</html>

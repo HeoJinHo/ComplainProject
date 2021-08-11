@@ -18,6 +18,14 @@ public class HomeController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String goHome(HttpServletRequest request, Model model) {
         model.addAttribute("T1", complainSv.getAll());
+        model.addAttribute("test", "testModel");
         return "content/home";
     }
+
+    @RequestMapping(value = "/home2", method = RequestMethod.GET)
+    public String goHome2(HttpServletRequest request, Model model){
+        model.addAttribute("T2", complainSv.getAll());
+        return "content/home2";
+    }
+
 }

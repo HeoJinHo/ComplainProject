@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default_layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layouts/layout}">
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css"> </th:block>
 
-<body>
-<th:block layout:fragment="header" th:include="@{fragments/header}"/>
+<!--&lt;!&ndash; index.html 고유 스크립트 추가 &ndash;&gt;-->
+<th:block layout:fragment="script"> </th:block>
 
-<div layout:fragment="content" class="content">
-    <h5>C</h5>
-
-
-    <table border="1">
+<div layout:fragment="content">
+    <table border="1" class="table">
         <tr>
             <th>TEXT2sㄴㄴㄴs</th>
         </tr>
@@ -19,16 +17,8 @@
             </tr>
         </th:block>
     </table>
-
-
 </div>
-
-<th:block layout:fragment="footer" th:include="@{fragments/footer}"/>
-
-<script>
-    // model값 바로 가져오기
-    //alert("[[${test}]]");
-
-</script>
-</body>
 </html>
+<!--
+// model값 바로 가져오기
+//alert("[[${test}]]");-->

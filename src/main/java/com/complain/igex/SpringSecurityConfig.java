@@ -1,14 +1,21 @@
 package com.complain.igex;
 
+import com.complain.igex.common.AuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
 {
+
+    @Autowired
+    AuthProvider authProvider;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 허용되어야 할 경로들
@@ -42,6 +49,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
                 .defaultSuccessUrl("/authPage")
                 .usernameParameter("id_user")
                 .passwordParameter("password");
+
+        http
+                // 로그아웃 관련 설정
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/log_out"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .and()
+                .csrf()
+                .csrfTokenRepository(new CookieCsrfTokenRepository())
+                .and()
+                // 로그인 프로세스가 진행될 provider
+                .authenticationProvider(authProvider);
     }
 
 }

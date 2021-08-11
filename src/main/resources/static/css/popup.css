@@ -1,0 +1,179 @@
+@charset "utf-8";
+
+/*** 팝업 ***/
+.pop-layer {
+    position:fixed; top:0; left:0; width:100%; height:100%;
+    z-index:-1; opacity:0; transition:all 0.2s
+}
+.pop-layer.on {
+    z-index:999; opacity:1
+}
+.pop-layer .bg-dim {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,.5)
+}
+.wrap-pop {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:450px;
+    background-color:#fff; border:1px solid #1e2f3a; border-radius:3px;
+    box-shadow:0 2px 10px rgba(0,0,0,.5)
+}
+.wrap-pop .head-pop {
+    position:relative; padding:15px 20px;
+    background-color:#1e2f3a
+}
+.wrap-pop .head-pop .title {
+    font-size:13px; font-weight:500; color:#fff
+}
+.wrap-pop .btn-i-close {
+    position:absolute; right:15px; top:8px;
+    width:30px; height:30px; line-height: 30px;
+    font-size: 16px;
+    background:transparent; cursor:pointer;border:0px;color: #fff;
+}
+/*
+.wrap-pop .btn-i-close:before,
+.wrap-pop .btn-i-close:after {
+    content: ''; position:absolute; top:5px; left:15px; height:20px;
+    border-left:1px solid #fff
+}
+.wrap-pop .btn-i-close:before {transform:rotate(-45deg)}
+.wrap-pop .btn-i-close:after {transform:rotate(45deg)}*/
+.wrap-pop .con-pop {
+    position:relative; padding:30px 20px
+}
+.wrap-pop .con-pop .txt-opt {margin-bottom:5px}
+.wrap-pop .con-pop section {margin-bottom:20px}
+.wrap-pop .con-pop section:last-of-type {margin-bottom:0}
+.wrap-pop .con-pop .title {
+    margin-bottom:5px; font-size:1.05rem; font-weight:350; color:#1e2f3a
+}
+.wrap-pop .con-pop .title-box {
+    display:-webkit-box; display:-ms-flexbox; display:flex;
+    -webkit-box-align:center; -ms-flex-align:center; align-items:center;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+.wrap-pop .con-pop .tbl-basic {margin:10px 0}
+.wrap-pop .con-pop .board-list {margin:10px 0;}
+.wrap-pop .foot-pop {
+    padding:0 0 20px; text-align:center; font-size:0
+}
+.wrap-pop .foot-pop button:not(:first-child) {margin-left:5px}
+
+.wrap-pop tbody td{
+    padding: 10px 4px !important;
+}
+
+/* 정산 서류 제출 */
+.inp-box.files {
+    -webkit-flex:0 1 auto; -ms-flex:0 1 auto; flex:0 1 auto;
+}
+.btn.filebox {
+    -webkit-flex:1 0 75px; -ms-flex:1 0 75px; flex:1 0 75px;
+    position:relative; cursor:pointer
+}
+.btn.filebox input[type="file"] {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    cursor:pointer; opacity:0
+}
+
+/* 수금 완료 처리 */
+.wrap-pop .con-pop .txt-alert {
+    font-size:1.1rem; font-weight:500; color:#333;
+    text-align:center; line-height:1.5
+}
+.wrap-pop .con-pop .txt-alert:not(:first-child) {margin-top:20px}
+.wrap-pop .con-pop .txt-alert b {
+    font-weight:bold; color:#63c2de; text-decoration:underline
+}
+
+/* 팝업 데이터테이블 공통 - 결제 현황 조회 */
+.pop-big .wrap-pop {width:700px}
+.pop-layer .wrap-search,
+.pop-layer .pay-result {margin-bottom:10px}
+.pop-layer .tbl-board {min-width:480px}
+.pop-layer .tbl-board td {
+    text-align:center; vertical-align:middle
+}
+.pop-layer .pagination {margin-bottom:0}
+
+/* 판매점 일반 등록 */
+.pop-regist .wrap-pop,
+.pop-modify .wrap-pop {width:530px}
+
+
+/* 이미지 보기 */
+.pop-img .con-pop {height:80vh; margin-bottom:20px; overflow-y:auto}
+.pop-img .con-pop img {max-width:100%}
+
+/* 문자내용 */
+.pop-txt .btn-collapse {
+    display:block; margin:30px auto 10px; padding:0 24px
+}
+.pop-txt .btn-collapse i {margin:0 0 0 4px}
+.pop-txt .wrap-sms {
+    display:none;
+    max-height:50vh; padding:12px; overflow-y:auto;
+    background:#f5f5f5; border-radius:5px
+}
+.pop-txt .wrap-sms img {max-width:60%}
+.pop-txt .wrap-sms pre {
+    margin:0; white-space:pre-line;
+    font-family:inherit; line-height:1.3
+}
+
+/* 활성화 기준 및 독점권 보장 안내, 영업문자 이미지 관리 */
+.pop-txt .list-disc li {
+    margin-bottom:10px;
+    font-size:1.1rem; line-height:1.5
+}
+.pop-txt .list-disc li:before {top:0.8rem}
+.pop-txt .list-disc li:last-of-type {margin-bottom:0}
+
+/* 온라인 영업 안내 */
+.pop-onlinesales .tbl-basic {
+    margin-top:20px; border-left:1px solid #dfe3e5; border-right:1px solid #dfe3e5
+}
+.pop-onlinesales .tbl-basic th {text-align:center}
+
+/* 마진설정 */
+.pop-layer .tbl-basic + .txt-s {margin-top:10px}
+
+
+@media (max-width:980px) {
+    .pop-layer .wrap-pop {width:95%}
+}
+
+@media (max-width:768px) {
+    .pop-layer .wrap-pop {
+        width:100%; transform:inherit; top:0; left:0; right:0; bottom:0
+    }
+    .wrap-pop .con-pop {
+        padding-left:10px; padding-right:10px; overflow-y:auto
+    }
+    .wrap-pop .tbl-basic th {padding:8px}
+}
+
+
+/* 팝업 내용이 길어질 때, 스크롤 생기게 */
+.wrap-pop .con-pop.scroll-con {
+    max-height:720px;
+    overflow-y: auto;
+}
+
+/* 20.04.17
+ 결제 설정 -paymentSettingPopup */
+.pop-paymentset .tbl-setting {margin-top:30px}
+.pop-paymentset .tbl-setting .switch {vertical-align:middle}
+.pop-paymentset .tbl-setting .d-inlineb {margin-left:8px; vertical-align:middle}
+.pop-paymentset .tbl-setting .d-inlineb b {font-weight:bold}
+.pop-paymentset .tbl-setting .txt-s {margin-top:4px}
+.pop-paymentset .tbl-setting .fee {float:right; padding:4px 10px; line-height:1; color:#99aab5; background:#fffbe8; border:1px solid #dfe3e5; border-radius:20px}
+
+/* 팝업 가장 큰 사이즈 */
+.pop-xl .wrap-pop {width:100%; max-width:960px}
+
+/* 판매점 추가 정보 -detailInfoPopup */
+.pop-detail-info label.txt {white-space:nowrap}
+.pop-detail-info .td-flex .txt-s {margin-left:15px}

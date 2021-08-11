@@ -1,18 +1,23 @@
 package com.complain.igex.model;
 
+import com.complain.igex.model.cenum.ComplainState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@Document
+import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
-@ToString
 public class Complain
 {
-
+    /*
+     * 민원 등록
+     * */
     @Id
     String id;
 
@@ -32,6 +37,19 @@ public class Complain
 
     String com_content;
 
+    ComplainState com_state;
+
+    String manageID;
+    String manageName;
+
+    Member memberInfo;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    Date reg_date;
 
 
+    String complainComment;
+
+
+    List<MainMonitor> monitors;
 }

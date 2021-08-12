@@ -1,6 +1,7 @@
 package com.complain.igex.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -8,6 +9,8 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
+// null 값은 제외 하고 객체를 만듬
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResult
 {
 

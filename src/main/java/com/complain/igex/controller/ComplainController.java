@@ -175,4 +175,34 @@ public class ComplainController
         return "redirect:/complain/complainList";
     }
 
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
+    @GetMapping("/homes")
+    public ModelAndView homes
+            (
+                    @AuthenticationPrincipal Member member,
+                    @PageableDefault(size = 10) Pageable pageable,
+                    SeachData seachData
+            )
+    {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("content/home2");
+        if ("ROLE_WORKER".equals(member.getAuth()))
+            seachData.setDept(member.getMember_dept());
+
+        mv.addObject("data", complainSv.searchAll(pageable, seachData));
+        mv.addObject("searchData", seachData);
+        mv.addObject("pageType", "complain");
+
+        if ("ROLE_WORKER".equals(member.getAuth()))
+            seachData.setDept(member.getMember_dept());
+
+        totalDataInit(mv, seachData);
+        return mv;
+    }
+
+
+
 }

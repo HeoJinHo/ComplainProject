@@ -11,17 +11,12 @@
 
 <div layout:fragment="content">
     <table border="1" class="table">
-        <tr>
-            <th>
-                <span sec:authentication="principal.member_name"></span>님이 로그인 상태
-
-            </th>
-        </tr>
-<!--        <th:block th:each="rl : ${T2}">-->
+        <th:block th:each="rl : ${data}">
             <tr>
-<!--                <td th:text="${ rl.getCom_title() }" th:if="${ rl.getCom_title() ne 'asdas' }"></td>-->
+                <td th:text="${ rl.getCom_name() }"></td>
             </tr>
-<!--        </th:block>-->
+        </th:block>
+
     </table>
 </div>
 </html>

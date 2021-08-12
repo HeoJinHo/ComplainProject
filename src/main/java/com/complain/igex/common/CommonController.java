@@ -68,9 +68,7 @@ public class CommonController {
     @GetMapping("/authPage")
     public String authPage(@AuthenticationPrincipal Member member) {
         if ("ROLE_ADMIN".equals(member.getAuth()) || "ROLE_WORKER".equals(member.getAuth())) {
-            System.out.println("!231231");
-            System.out.println(member.getMember_id());
-            return "redirect:home2";
+            return "redirect:complain/homes";
 //            return "redirect:complain/complainList";
         } else {
 //            return "redirect:complain/myComplainList";

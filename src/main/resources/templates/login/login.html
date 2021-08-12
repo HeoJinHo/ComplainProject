@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>민원관리 서비스 :: 로그인</title>
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <title>로그인</title>
+<!--    <link href="/css/bootstrap.css" rel="stylesheet">-->
 </head>
 <body class="login">
     <form class="form-signin" action="/authenticate" method="POST">
-        <h1><span>인천김포 고속도로</span></h1>
+        <h1><span></span></h1>
         <div class="wrap col-lg-12">
             <div class="form-group">
                 <input type="text" th:name="id_user" class="form-control" placeholder="아이디를 입력해주세요." required="" th:value="admin">
@@ -20,7 +20,7 @@
         </div>
     </form>
     <footer>
-        2021 Korea Solution rights reserved.
+        2021 Korea rights reserved.
     </footer>
 </body>
 </html>

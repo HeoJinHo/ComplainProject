@@ -43,8 +43,7 @@ public class CommonController {
     @PostMapping("/joinMember")
     public String joinMember(Member member) {
         commonSv.memberInsert(member);
-        return "content/home";
-//        return "redirect:/manage/member";
+        return "redirect:manage/member";
     }
 
     @GetMapping("/log_out")

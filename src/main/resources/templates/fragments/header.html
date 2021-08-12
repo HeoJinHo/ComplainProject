@@ -1,8 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <header th:fragment="headerFragment">
-    <div style="border: 1px solid green">
-        header.html 입니다.
+    <!--    <div style="border: 1px solid green">-->
+    <!--        header.html 입니다.-->
+    <!--    </div>-->
+
+    <div class="header">
+        <div class="header_top">
+            <div class="inner clearfix">
+                <div class="logoBox" style="padding-top: 0px;">
+                    <h1>
+                        <a href="#">
+                            <span style="color: white; font-size: 18px;">Test</span>
+                        </a>
+                        <span class="sr_only">TestManage</span>
+                    </h1>
+                </div>
+
+                <div class="utilBox clearfix">
+                    <div class="util_info">
+
+                    </div>
+                    <!--// infoUtil -->
+
+                    <div class="util_user">
+                        <ul>
+                            <li class="userStatus">
+                                <div class="ust ust_2">
+                                    <a href="#" class="userInfoShow">
+                                        <span class="loginGreet"><strong
+                                                sec:authentication="principal.member_name"></strong>님 로그인중</span>
+                                        <div class="dropdown-menu alertBox memberBox">
+                                            <div class="alertTT">내 정보</div>
+                                            <div class="alertCT">
+                                                <dl>
+                                                    <dt>아이디</dt>
+                                                    <dd sec:authentication="principal.member_id"></dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        <!--// memberBox -->
+                                    </a>
+                                </div>
+                                <div class="ust ust_3">
+                                    <a href="/log_out" class="btn_logout">로그아웃</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- top end -->
+
+        <div class="header_bottom">
+            <div class="inner">
+                <nav class="gnbWrap">
+                    <h2 class="sr_only">전체 메뉴</h2>
+                    <ul class="gnb">
+                        <li class="with-popover current">
+                            <a href="#">전체메뉴</a>
+                            <ul>
+                                <li class="sub_menu">
+                                    <a href="#">메뉴0</a>
+                                    <ul>
+                                        <li><a href="#">메뉴1</a></li>
+                                        <li><a href="#">메뉴2</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
+
 </header>
 </html>

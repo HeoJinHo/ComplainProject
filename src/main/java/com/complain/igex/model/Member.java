@@ -1,6 +1,7 @@
 package com.complain.igex.model;
 
 import com.complain.igex.model.cenum.MemberState;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Document
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Member {
 
     @Id

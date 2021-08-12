@@ -80,7 +80,7 @@ public class RestTestController
     public ApiResult test2233(){
         Map<String, Pair<Integer, Integer>> map = new HashMap<>();
         map.put("pTest", Pair.of(1, 4));
-        return new ApiResult(true, "성공");
+        return new ApiResult(true, "성공", Pair.of(1, 4));
     }
 
 

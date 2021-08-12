@@ -205,4 +205,13 @@ public class ComplainController
 
 
 
+    @GetMapping("/complainFormPopUp")
+    public ModelAndView complainFormPopUp()
+    {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("complain/complainFormPopUp");
+        return mv;
+    }
+
+
 }

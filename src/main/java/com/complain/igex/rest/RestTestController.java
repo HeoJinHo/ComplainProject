@@ -1,5 +1,6 @@
 package com.complain.igex.rest;
 
+import com.complain.igex.data.ApiResult;
 import com.complain.igex.model.Member;
 import com.complain.igex.repository.MemberRepository;
 import com.complain.igex.searchData.MemberSearchData;
@@ -10,20 +11,25 @@ import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.util.Pair;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-@org.springframework.web.bind.annotation.RestController
+/**
+ * RestApi Test Controller
+ */
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/rest")
-public class RestController
+public class RestTestController
 {
 
     private final ComplainSv complainSv;
@@ -64,9 +70,27 @@ public class RestController
         map.put("result3", memberRepository.findById(id));
         map.put("result4", "tt2tutti12");
         map.put("result5", "tutti2tt12");
+        map.put("pTest", Pair.of(1, 4));
 
         return new JSONObject(map);
     }
 
+
+    @GetMapping("/test2")
+    public ApiResult test2233(){
+        Map<String, Pair<Integer, Integer>> map = new HashMap<>();
+        map.put("pTest", Pair.of(1, 4));
+        return new ApiResult(true, "성공");
+    }
+
+
+    @GetMapping("/test3")
+    public Page<Member> pagingMember(
+            @PageableDefault(size = 10) Pageable pageable,
+            MemberSearchData memberSearchData
+    )
+    {
+        return memberSv.searchAll(pageable, memberSearchData);
+    }
 
 }

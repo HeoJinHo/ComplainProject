@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layoutNone}">
+
+<div layout:fragment="content">
+
+
+    <div class="title_box clearfix">
+        <div class="ttBox">
+            <h3 class="title">test1</h3>
+        </div>
+        <div class="location">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="#"><i class="la la-home"></i></a>
+                </li>
+                <li>
+                    <a href="#">test2</a>
+                </li>
+                <li>
+                    <a href="#">test3</a>
+                </li>
+                <li class="bdln">
+                    <strong class="active">Insert</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="tbInfo">
+        <small><strong class="cgreen">*</strong>는 필수 입력 입니다.</small>
+    </div>
+    <form action="${pageContext.request.contextPath}/complain/complainInsert" method="POST" id="complainForm" onsubmit="return confirm('민원을 등록 하시겠습니까?');">
+        <table class="table tbView">
+            <colgroup>
+                <col width="180">
+                <col width="*">
+            </colgroup>
+            <thead></thead>
+            <tbody>
+            <tr>
+                <th><strong class="cgreen">*</strong> 민원인</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_name" required="">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><strong class="cgreen">*</strong> 전화번호</th>
+                <td>
+                    <div  class="inputdl">
+                        <dl>
+                            <dd>
+
+                                <div class="inputBox inputBtnText2">
+                                    <input type="text" name="com_phone" required="">
+                                </div>
+
+                                <div class="inputBtnWrapper">
+                                    <div class="inputBtnWrap inputBtnWrap2">
+                                        <button type="button" class="inputBtn" onclick="ajaxPhoneCall()">핸드폰 인증</button>
+                                    </div>
+                                </div>
+
+                            </dd>
+                        </dl>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr id="hiidenPhoneArea" hidden>
+                <th><strong class="cgreen">*</strong> 인증번호</th>
+                <td>
+                    <div  class="inputdl">
+                        <dl>
+                            <dd>
+
+                                <div class="inputBox inputBtnText2">
+                                    <input type="text" id="phoneCheckVal" required="">
+                                </div>
+
+                                <div class="inputBtnWrapper">
+                                    <div class="inputBtnWrap inputBtnWrap2">
+                                        <button type="button" class="inputBtn" id="ageeBtn" onclick="ajaxPhoneCheck()">인증하기</button>
+                                    </div>
+                                </div>
+
+                            </dd>
+                        </dl>
+                    </div>
+                </td>
+            </tr>
+
+            <input type="text" id="reqNumber">
+            <tr>
+                <th>이메일</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_email">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>우편번호</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_zip_code">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_address">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>상세주소</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_address_detail">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>담당자 지정</th>
+                <td>
+                    <div  class="inputdl">
+                        <dl>
+                            <dd>
+                                <div class="inputBox inputBtnText2">
+                                    <input type="text" name="manageName" ondblclick="openUserPopup()" readonly id="complainManageNm" maxlength="20" placeholder="담당자를 지정해주세요." value="${data.get().manageName}">
+                                    <input type="hidden" name="manageID" id="complainManage" maxlength="20" placeholder="담당자를 지정해주세요." value="${data.get().manageID}">
+                                </div>
+                                <div class="inputBtnWrapper">
+                                    <div class="inputBtnWrap inputBtnWrap2">
+                                        <button type="button" class="inputBtn" onclick="openUserPopup()">담당자 지정</button>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th><strong class="cgreen">*</strong> 민원제목</th>
+                <td>
+                    <div class="inputBox price half2">
+                        <input type="text" name="com_title" required="">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th><strong class="cgreen">*</strong> 민원내용</th>
+                <td class="inBlock_elemt">
+                    <div class="textareaWrap">
+                        <textarea type="text" name="com_content" required=""></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
+        <div class="btnArea group">
+            <span> <a href="/complain/complainList" class="btn whitegrey">목록으로</a> </span>
+            <span> <button type="submit" class="btn blue-sub">저장</button> </span>
+        </div>
+    </form>
+
+
+
+</div>
+</html>

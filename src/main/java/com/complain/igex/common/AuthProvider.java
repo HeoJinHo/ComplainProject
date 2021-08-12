@@ -35,10 +35,6 @@ public class AuthProvider implements AuthenticationProvider {
         Criteria criteria = new Criteria("_id");
         criteria.is(id);
 
-        System.out.println("_id : " + id);
-        System.out.println("criteria : " + criteria);
-
-
         Query query = new Query(criteria);
         Member member = mongoTemplate.findOne(query, Member.class);
 
@@ -47,7 +43,6 @@ public class AuthProvider implements AuthenticationProvider {
             return null;
 
         if (!passwordEncoder.matches(authentication.getCredentials().toString(), member.getMember_pwd())) {
-            System.out.println("wwwww");
             throw new BadCredentialsException("Wrong password");
         }
 

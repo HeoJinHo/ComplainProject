@@ -36,8 +36,8 @@ public class CommonController {
     @PostMapping("/join_form")
     public String join_form(Member member) {
         commonSv.memberInsert(member);
-        return "content/home";
-//        return "redirect:/login";
+//        return "content/home";
+        return "redirect:login";
     }
 
     @PostMapping("/joinMember")

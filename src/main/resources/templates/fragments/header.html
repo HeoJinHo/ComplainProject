@@ -12,7 +12,7 @@
                 <div class="logoBox" style="padding-top: 0px;">
                     <h1>
                         <a href="#">
-                            <span style="color: white; font-size: 18px;">Test</span>
+                            <span style="color: white; font-size: 18px;">민원관리 서비스</span>
                         </a>
                         <span class="sr_only">TestManage</span>
                     </h1>
@@ -60,15 +60,16 @@
                 <nav class="gnbWrap">
                     <h2 class="sr_only">전체 메뉴</h2>
                     <ul class="gnb">
-                        <li class="with-popover current">
-                            <a href="#">전체메뉴</a>
+                        <li class="with-popover" th:classappend="${pageType} == 'complain' ? 'current' ">
+                            <a href="#">민원관리</a>
                             <ul>
                                 <li class="sub_menu">
-                                    <a href="#">메뉴0</a>
+                                    <a href="#">민원관리</a>
                                     <ul>
-                                        <li><a href="/complain/complainForm">메뉴1</a></li>
+                                        <li><a href="/complain/complainList">전체민원</a></li>
+                                        <li><a href="/complain/complainForm">민원 등록</a></li>
 
-                                        <li><a href="/complain/complainFormPopUp" onclick="window.open(this.href, '팝업창', 'width=800, height=800'); return false;">메뉴2</a></li>
+                                        <li><a href="/complain/complainFormPopUp" onclick="window.open(this.href, '팝업창', 'width=800, height=800'); return false;">민원 등록(PopUp)</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -78,6 +79,7 @@
             </div>
         </div>
     </div>
+
 
 </header>
 </html>

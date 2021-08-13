@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="searchBaseFragment">
+    <script>
+
+        $(document).ready(function () {
+            // 날짜 달력
+            // setDatepicker("startDate", "endDate");
+
+            // 날자 기간 세팅 버튼
+            $("#d1, #d2, #d3, #d4, #d5").click(function (event) {
+                switch ($(event.target).prop("id")) {
+                    case "d1" : setDateRange("startDate", "endDate", 0, "day"); break;
+                    case "d2" : setDateRange("startDate", "endDate", -6, "day"); break;
+                    case "d3" : setDateRange("startDate", "endDate", -1, "month"); break;
+                    case "d4" : setDateRange("startDate", "endDate", -3, "month"); break;
+                    case "d5" : setDateRange("startDate", "endDate", null, null);
+                }
+            });
+
+            // 기본검색, 상세검색
+            $("#searchDetail, #searchBasic").click(function (event) {
+                if($(event.target).prop("id") === "searchDetail") {
+                    $("#searchType").val("detail");
+                } else {
+                    $("#searchType").val("basic");
+                }
+            });
+
+
+
+            // 날짜 기간 버튼 세팅
+            $("input[name='dateRange']").val(["${searchData.dateRange}"]);
+
+            // 검색 초기화
+            $("#resetBtn").click(function () {
+                var url = $("#searchForm").prop("action");
+                console.log(url);
+                location.href = url;
+            });
+        });
+
+
+
+    </script>
+</nav>
+</html>

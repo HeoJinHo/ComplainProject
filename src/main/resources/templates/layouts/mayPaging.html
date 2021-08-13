@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="pagingFragment" class="pageNav" aria-label="Page navigation">
+<!--    <ul class='pagination'>-->
+
+<!--        <li class="page-item">-->
+<!--            <a class="page-link"  aria-label="Previous">-->
+<!--                <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true" style='line-height: 32px;'></i></span>-->
+<!--                <span class="sr-only">Previous</span>-->
+<!--            </a>-->
+<!--        </li>-->
+
+<!--        <li class="page-item">-->
+<!--            <span th:text="${data.totalPages}"></span>-->
+
+<!--        </li>-->
+
+
+<!--    </ul>-->
+
+
+    <ul class="pagination" style="text-align: center;" th:with="start=${T(Math).floor(data.number/10)*10 + 1}, last=(${start + 9 < data.totalPages ? start + 9 : data.totalPages})">
+        <a th:text="${data.first}"></a>
+        <a th:text="${data.last}"></a>
+
+        <li class="page-item" th:classappend="${data.first} ? 'disabled'">
+            <a th:onclick="|javascript:onPage('${data.number - 1}')|" class="page-link">
+                <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true" style='line-height: 32px;'></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == data.number + 1} ? 'active'">
+            <a th:text="${page}" th:onclick="|javascript:onPage('${page-1}')|"></a>
+        </li>
+
+        <li class="page-item" th:classappend="${data.last} ? 'disabled'">
+            <a th:onclick="|javascript:onPage('${data.number + 1}')|" aria-label="Next">
+                <span aria-hidden="true"><i class="fa fa-angle-right" aria-hidden="true" style='line-height: 32px;'></i></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+
+
+</nav>
+</html>
+
+<!--
+<tr th:each="item, index : ${data.content}">
+
+-->

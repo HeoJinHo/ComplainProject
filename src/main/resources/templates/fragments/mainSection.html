@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<main th:fragment="mainSectionFragment" id="content_wrap" class="clearfix" name="content_wrap">
+    <section id="content">
+        <h2 class="sr_only">본문내용</h2>
+        <div id="table-fixed">
+            <div id="content_inner">
+                <div layout:fragment="content"></div>
+            </div>
+        </div>
+    </section>
+</main>
+</html>
+
+

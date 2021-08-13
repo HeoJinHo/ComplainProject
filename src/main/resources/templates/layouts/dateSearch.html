@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="dateSearchFragment">
+  <div class="col-sm-6">
+    <p class="label_tit" th:text="${dateTitle eq null ? '기간' : dateTitle}"></p>
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="formEleWrap">
+
+          <div class="inputBox half datePick" data-ax5picker="basic">
+            <label class="label_tit sr_only" for="startDate">시작 기간</label>
+            <input type="text" name="startDate" id="startDate" th:value="${searchData.startDate}" placeholder="연도-월-일"  autocomplete="off" />
+            <div class="datePickIcon">
+              <i class="la la-calendar"></i>
+            </div>
+          </div>
+          <div class="fromTo">~</div>
+          <div class="inputBox half datePick">
+            <label class="label_tit sr_only" for="endDate">끝 기간</label>
+            <input type="text" name="endDate" id="endDate" th:value="${searchData.endDate}" placeholder="연도-월-일" autocomplete="off" />
+            <div class="datePickIcon">
+              <i class="la la-calendar"></i>
+            </div>
+          </div>
+        </div>
+        <!--// formEleWrap.half -->
+      </div>
+
+      <div class="col-sm-6 pd_horiz0">
+        <div class="formEleWrap col-sm-6">
+          <ul class="schOpt clearfix col5">
+            <li>
+              <input class="radio_toggle" type="radio" name="dateRange" value="d1" id="d1">
+              <label for="d1">오늘</label>
+            </li>
+            <li>
+              <input class="radio_toggle" type="radio" name="dateRange" value="d2" id="d2">
+              <label for="d2">일주일</label>
+            </li>
+            <li>
+              <input class="radio_toggle" type="radio" name="dateRange" value="d3" id="d3">
+              <label for="d3">1개월</label>
+            </li>
+            <li>
+              <input class="radio_toggle" type="radio" name="dateRange" value="d4" id="d4">
+              <label for="d4">3개월</label>
+            </li>
+            <li>
+              <input class="radio_toggle" type="radio" name="dateRange" value="" id="d5">
+              <label for="d5">전체</label>
+            </li>
+          </ul>
+        </div>
+        <!--// formEleWrap -->
+      </div>
+    </div>
+  </div>
+</nav>
+</html>

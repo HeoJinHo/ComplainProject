@@ -25,8 +25,7 @@ import java.util.stream.Collectors;
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Controller
 @RequestMapping("/complain")
-public class ComplainController
-{
+public class ComplainController {
 
     private final ComplainSv complainSv;
 
@@ -43,8 +42,7 @@ public class ComplainController
             @AuthenticationPrincipal Member member,
             @PageableDefault(size = 10) Pageable pageable,
             SeachData seachData
-    )
-    {
+    ) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainList");
         seachData.setManageID(member.getMember_id());
@@ -68,26 +66,31 @@ public class ComplainController
                     @AuthenticationPrincipal Member member,
                     @PageableDefault(size = 10) Pageable pageable,
                     SeachData seachData
-            )
-    {
+            ) {
         ModelAndView mv = new ModelAndView();
+
+        //토탈 검색용
+        SeachData setSearchData = new SeachData();
         mv.setViewName("complain/complainList");
-        if ("ROLE_WORKER".equals(member.getAuth()))
+        if ("ROLE_WORKER".equals(member.getAuth())) {
             seachData.setDept(member.getMember_dept());
+            setSearchData.setDept(member.getMember_dept());
+        }
 
         mv.addObject("data", complainSv.searchAll(pageable, seachData));
         mv.addObject("searchData", seachData);
         mv.addObject("pageType", "complain");
 
-        if ("ROLE_WORKER".equals(member.getAuth()))
-            seachData.setDept(member.getMember_dept());
 
-        totalDataInit(mv, seachData);
+
+
+        totalDataInit(mv, setSearchData);
         return mv;
     }
 
     /**
      * 전체 데이터 토탈을 위해 조회
+     *
      * @param mv
      * @param setTotal
      */
@@ -97,16 +100,23 @@ public class ComplainController
         totalData.put("totalCount", (long) complains.size());
 
         Map<ComplainState, Long> collect = complains.stream().collect(Collectors.groupingBy(Complain::getCom_state, Collectors.counting()));
-        totalData.put("requestCount", collect.get(ComplainState.REQUEST));
-        totalData.put("approveCount", collect.get(ComplainState.APPROVE));
-        totalData.put("completeCount", collect.get(ComplainState.COMPLETE));
-        totalData.put("rejectCount", collect.get(ComplainState.REJECT));
+
+
+        Long request_int = collect.get(ComplainState.REQUEST);
+        Long approve_int = collect.get(ComplainState.APPROVE);
+        Long complete_int = collect.get(ComplainState.COMPLETE);
+        Long reject_int = collect.get(ComplainState.REJECT);
+
+
+        totalData.put("requestCount", (request_int == null) ? 0 : request_int);
+        totalData.put("approveCount", (approve_int == null) ? 0 : approve_int);
+        totalData.put("completeCount", (complete_int == null) ? 0 : complete_int);
+        totalData.put("rejectCount", (reject_int == null) ? 0 : reject_int);
         mv.addObject("totalData", totalData);
     }
 
     @GetMapping("/complainDetail")
-    public ModelAndView complainDetail(String id)
-    {
+    public ModelAndView complainDetail(String id) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainDetail");
         mv.addObject("data", complainSv.findOne(id));
@@ -116,8 +126,7 @@ public class ComplainController
     }
 
     @GetMapping("/complainForm")
-    public ModelAndView complainForm()
-    {
+    public ModelAndView complainForm() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainForm");
         mv.addObject("pageType", "complain");
@@ -125,8 +134,7 @@ public class ComplainController
     }
 
     @PostMapping("/complainInsert")
-    public String complainInsert(Complain complain)
-    {
+    public String complainInsert(Complain complain) {
 
         complainSv.complainInsertSv(complain);
 
@@ -134,8 +142,7 @@ public class ComplainController
     }
 
     @PostMapping("/myComplainInsert")
-    public String myComplainInsert(Complain complain)
-    {
+    public String myComplainInsert(Complain complain) {
 
         complainSv.complainInsertSv(complain);
 
@@ -144,13 +151,12 @@ public class ComplainController
 
 
     @PostMapping("/complainState")
-    public String complainState(@AuthenticationPrincipal Member member, Complain complain)
-    {
+    public String complainState(@AuthenticationPrincipal Member member, Complain complain) {
         System.out.println(complain.getMonitors());
 
-        String rtn = "redirect:/complain/complainDetail?id="+complain.getId();
+        String rtn = "redirect:/complain/complainDetail?id=" + complain.getId();
         if (!member.getAuth().equals("ROLE_ADMIN"))
-            rtn = "redirect:/complain/myComplainDetail?id="+complain.getId();
+            rtn = "redirect:/complain/myComplainDetail?id=" + complain.getId();
 
         complainSv.complainStateUpdate(complain, member.getMember_id());
         return rtn;
@@ -158,8 +164,7 @@ public class ComplainController
 
 
     @GetMapping("/myComplainDetail")
-    public ModelAndView myComplainDetail(String id)
-    {
+    public ModelAndView myComplainDetail(String id) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/myComplainDetail");
         mv.addObject("data", complainSv.findOne(id));
@@ -169,13 +174,10 @@ public class ComplainController
 
 
     @GetMapping("/complainDelete")
-    public String complainDelete(String id)
-    {
+    public String complainDelete(String id) {
         complainSv.complainDelete(id);
         return "redirect:/complain/complainList";
     }
-
-
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
@@ -185,8 +187,7 @@ public class ComplainController
                     @AuthenticationPrincipal Member member,
                     @PageableDefault(size = 10) Pageable pageable,
                     SeachData seachData
-            )
-    {
+            ) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("content/home2");
         if ("ROLE_WORKER".equals(member.getAuth()))
@@ -204,10 +205,8 @@ public class ComplainController
     }
 
 
-
     @GetMapping("/complainFormPopUp")
-    public ModelAndView complainFormPopUp()
-    {
+    public ModelAndView complainFormPopUp() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainFormPopUp");
         return mv;

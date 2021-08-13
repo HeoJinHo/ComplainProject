@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layout}">
+
+
+
+
+<div layout:fragment="content">
+    <div class="title_box clearfix">
+        <div class="ttBox">
+            <h3 class="title">사용자 목록</h3>
+        </div>
+        <div class="location">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="#"><i class="la la-home"></i></a>
+                </li>
+                <li>
+                    <a href="#">설정</a>
+                </li>
+                <li class="bdln">
+                    <strong class="active">사용자 조회</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <nav th:replace="layouts/searchBase :: searchBaseFragment"></nav>
+    <div class="cardWrap list">
+        <div class="cardInner">
+            <form class="search_filter" id="searchForm" action="/complain/complainList" method="get">
+                <input type="hidden" id="page" name="page" value="">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="formEleWrap">
+                            <label class="label_tit" for="p_member_id">사용자ID</label>
+                            <div class="inputBox">
+                                <input type="text" name="searchName" id="p_member_id" th:value="${searchData.memberID}"
+                                       placeholder="사용자 아이디를 입력하세요.">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-3">
+                        <div class="formEleWrap">
+                            <label class="label_tit" for="p_member_name">사용자 이름</label>
+                            <div class="inputBox">
+                                <input type="text" name="member_name" id="p_member_name" th:value="${searchData.member_name}" placeholder="사용자 이름을 입력하세요.">
+                            </div>
+                        </div>
+                    </div>
+                    <nav th:replace="layouts/dateSearch :: dateSearchFragment"></nav>
+                </div>
+
+                <div class="btnWrap">
+                    <button class="btn btn-sm bluegrey" type="button" id="resetBtn">초기화</button>
+                    <button class="btn btn-sm blue-sub btn_search" type="submit">검색</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="tbHead">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <span class="boardText">총 <strong th:text="${data.totalElements}"></strong>건</span>
+                </div>
+                <div class="pull-right listContBtn">
+                    <a href="/manage/join" class="btn btn-sm whitegrey">
+                        <i class="la la-plus"></i>사용자 등록
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">아이디</th>
+                <th class="text-center">이름</th>
+                <th class="text-center">권한</th>
+                <th class="text-center">전화번호</th>
+                <th class="text-center">관리</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr th:each="item, index : ${data.content}">
+
+                <td class="text-center" th:text="${item.member_id}"></td>
+                <td class="text-center" th:text="${item.member_name}"></td>
+                <th:block th:if="${item.auth eq 'ROLE_ADMIN'}">
+                    <td class="text-center">관리자</td>
+                </th:block>
+                <th:block th:if="${item.auth eq 'ROLE_WORKER'}">
+                    <td class="text-center">매니저</td>
+                </th:block>
+                <th:block th:if="${item.auth eq 'ROLE_USER'}">
+                    <td class="text-center">사용자</td>
+                </th:block>
+
+                <td class="text-center" th:text="${item.member_phone}"></td>
+                <td class="text-center">
+                    <div class="tdBtnWrap tdBtnWrap2">
+                        <a th:href="@{/manage/memberDetail(id=${item.member_id})}" class="btn btn-xs">상세</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <nav th:replace="layouts/mayPaging :: pagingFragment"></nav>
+
+
+</div>
+
+</html>

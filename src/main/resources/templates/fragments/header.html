@@ -74,7 +74,17 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' ">
+                            <a href="#">설정</a>
+                            <ul>
+                                <li><a href="/manage/member">사용자 조회</a></li>
+                                <li><a href="/dept/deptList">부서관리</a></li>
+                                <li><a href="/monitorManage">설문조사 관리</a></li>
+                            </ul>
+                        </li>
                     </ul>
+
                 </nav>
             </div>
         </div>

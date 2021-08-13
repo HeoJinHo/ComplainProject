@@ -28,6 +28,10 @@ public class CommonController {
     }
 
 
+    /**
+     * 로그인 - 페이지 이동
+     * @return
+     */
     @GetMapping("/login")
     public String loginPage_secu() {
         return "login/login";
@@ -40,17 +44,31 @@ public class CommonController {
         return "redirect:login";
     }
 
+    /**
+     * 회원가입  - 현재 사용 안함
+     * @param member
+     * @return
+     */
     @PostMapping("/joinMember")
     public String joinMember(Member member) {
         commonSv.memberInsert(member);
         return "redirect:manage/member";
     }
 
+    /**
+     * 로그아웃
+     * @return
+     */
     @GetMapping("/log_out")
     public String dispLogOut() {
         return "redirect:/login";
     }
 
+    /**
+     * 시스템 초기 도입시
+     * 관리자 데이터 생성
+     * @return redirect
+     */
     @GetMapping("/adminSet")
     public String adminSet() {
 
@@ -64,18 +82,25 @@ public class CommonController {
         return "redirect:/login";
     }
 
-
+    /**
+     * 권한별 첫 페이지를 정한다.
+     * @param member
+     * @return String page
+     */
     @GetMapping("/authPage")
     public String authPage(@AuthenticationPrincipal Member member) {
         if ("ROLE_ADMIN".equals(member.getAuth()) || "ROLE_WORKER".equals(member.getAuth())) {
-            return "redirect:complain/homes";
-//            return "redirect:complain/complainList";
+            return "redirect:complain/complainList";
         } else {
-//            return "redirect:complain/myComplainList";
-            return "redirect:home2";
+            return "redirect:complain/myComplainList";
+//            return "redirect:home2";
         }
     }
 
+    /**
+     * 핸드폰 인증번호 랜덤 생성
+     * @return
+     */
     @RequestMapping("/phoneAgee")
     @ResponseBody
     public int phoneAgee() {

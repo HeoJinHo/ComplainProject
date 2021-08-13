@@ -59,12 +59,6 @@
                                     <input type="text" name="com_phone" required>
                                 </div>
 
-                                <div class="inputBtnWrapper">
-                                    <div class="inputBtnWrap inputBtnWrap2">
-                                        <button type="button" class="inputBtn" onclick="ajaxPhoneCall()">핸드폰 인증</button>
-                                    </div>
-                                </div>
-
                             </dd>
                         </dl>
                     </div>
@@ -179,3 +173,28 @@
 
 </div>
 </html>
+
+<script>
+    /**
+     * 상품 불러오기 팝업 오픈
+     * @param memberID
+     */
+    var openUserPopup = function (param) {
+        var url = "/dialog/userPopup";
+        if(param !== undefined)
+            url += param;
+
+        $("#userPopup").load(url, function () {
+            $("#userPopup > .modal-backdrop").addClass("in");
+            $("#goodsBrower").show();
+        });
+    };
+
+    /**
+     * 상품 불러오기 팝업 닫기
+     */
+    var closeUsersPop = function () {
+        $('#userPopup').empty();
+    };
+
+</script>

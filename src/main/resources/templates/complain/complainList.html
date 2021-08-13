@@ -4,226 +4,246 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorator="~{layouts/layout}">
 
-  <div layout:fragment="content">
+
+
+
+<div layout:fragment="content">
     <div class="title_box clearfix">
-      <div class="ttBox">
-        <h3 class="title">전체민원</h3>
-      </div>
-      <div class="location">
-        <ul class="clearfix">
-          <li class="first">
-            <a href="#"><i class="la la-home"></i></a>
-          </li>
-          <li>
-            <a href="#">민원관리</a>
-          </li>
-          <li>
-            <a href="#">민원관리</a>
-          </li>
-          <li class="bdln">
-            <strong class="active">전체민원</strong>
-          </li>
-        </ul>
-      </div>
+        <div class="ttBox">
+            <h3 class="title">전체민원</h3>
+        </div>
+        <div class="location">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="#"><i class="la la-home"></i></a>
+                </li>
+                <li>
+                    <a href="#">민원관리</a>
+                </li>
+                <li>
+                    <a href="#">전체민원</a>
+                </li>
+                <li class="bdln">
+                    <strong class="active">전체민원</strong>
+                </li>
+            </ul>
+        </div>
     </div>
 
 
     <nav th:replace="layouts/searchBase :: searchBaseFragment"></nav>
     <div class="cardWrap list">
-      <div class="cardInner">
-        <form class="search_filter" id="searchForm" action="/complain/complainList" method="get">
-          <input type="hidden" id="page" name="page" value="">
-          <div class="row">
-            <div class="col-sm-3">
-              <div class="formEleWrap">
-                <label class="label_tit" for="searchName">민원인</label>
-                <div class="inputBox">
-                  <input type="text" name="searchName" id="searchName" value="" placeholder="검색할 민원인을 입력해주세요.">
+        <div class="cardInner">
+            <form class="search_filter" id="searchForm" action="/complain/complainList" method="get">
+                <input type="hidden" id="page" name="page" value="">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="formEleWrap">
+                            <label class="label_tit" for="searchName">민원인</label>
+                            <div class="inputBox">
+                                <input type="text" name="searchName" id="searchName" th:value="${searchData.searchName}"
+                                       placeholder="검색할 민원인을 입력해주세요.">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-3">
+                        <div class="formEleWrap">
+                            <label class="label_tit" for="com_state">상태</label>
+                            <div class="selectBox">
+                                <select id="com_state" name='com_state'>
+                                    <option value="">전체</option>
+                                    <option value="REQUEST">요청</option>
+                                    <option value="APPROVE">확인</option>
+                                    <option value="REJECT">반려</option>
+                                    <option value="COMPLETE">완료</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <nav th:replace="layouts/dateSearch :: dateSearchFragment"></nav>
                 </div>
-              </div>
-            </div>
 
-
-            <div class="col-sm-3">
-              <div class="formEleWrap">
-                <label class="label_tit" for="com_state">상태</label>
-                <div class="selectBox">
-                  <select id="com_state" name = 'com_state'>
-                    <option value="">전체</option>
-                    <option value="REQUEST">요청</option>
-                    <option value="APPROVE">확인</option>
-                    <option value="REJECT">반려</option>
-                    <option value="COMPLETE">완료</option>
-                  </select>
+                <div class="btnWrap">
+                    <button class="btn btn-sm bluegrey" type="button" id="resetBtn">초기화</button>
+                    <button class="btn btn-sm blue-sub btn_search" type="submit">검색</button>
                 </div>
-              </div>
+            </form>
+        </div>
+
+        <div class="tbHead totalCase">
+            <div class="clearfix">
+                <div class="table-responsive">
+                    <table class=" tbList2">
+                        <colgroup>
+                            <col width="*">
+                            <col width="*">
+                            <col width="*">
+                            <col width="*">
+                            <col width="*">
+                        </colgroup>
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr style="height: 45px !important;">
+                            <td id="allStateTab" onclick="stateChange('')">
+                                <div class="clearfix">
+                                    <div class="pull-left tdtitle">
+                                        전체
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="price_txt md">
+                                            <strong class="" th:text="${#numbers.formatInteger(totalData.totalCount, 0, 'COMMA')}"></strong>
+                                            <small>건</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td id="requestStateTab" onclick="stateChange('REQUEST')">
+                                <div class="clearfix">
+                                    <div class="pull-left tdtitle">
+                                        요청
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="price_txt md">
+                                            <strong class="" th:text="${#numbers.formatInteger(totalData.requestCount, 0, 'COMMA')}"></strong>
+                                          <small>건</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td id="approveStateTab" onclick="stateChange('APPROVE')">
+                                <div class="clearfix">
+                                    <div class="pull-left tdtitle">
+                                        확인
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="price_txt md">
+                                            <strong class="" th:text="${#numbers.formatInteger(totalData.approveCount, 0, 'COMMA')}"></strong>
+                                          <small>건</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td id="completeStateTab" onclick="stateChange('COMPLETE')">
+                                <div class="clearfix">
+                                    <div class="pull-left tdtitle">
+                                        완료
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="price_txt md">
+                                            <strong class="" th:text="${#numbers.formatInteger(totalData.completeCount, 0, 'COMMA')}"></strong>
+                                          <small>건</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td id="rejectStateTab" onclick="stateChange('REJECT')">
+                                <div class="clearfix">
+                                    <div class="pull-left tdtitle">
+                                        반려
+                                    </div>
+                                    <div class="pull-right">
+                                        <p class="price_txt md">
+                                            <strong class="" th:text="${#numbers.formatInteger(totalData.rejectCount, 0, 'COMMA')}"></strong>
+                                          <small>건</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <nav th:replace="layouts/dateSearch :: dateSearchFragment"></nav>
-          </div>
-
-          <div class="btnWrap">
-            <button class="btn btn-sm bluegrey" type="button" id="resetBtn">초기화</button>
-            <button class="btn btn-sm blue-sub btn_search" type="submit">검색</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="tbHead totalCase">
-        <div class="clearfix">
-          <div class="table-responsive">
-            <table class=" tbList2">
-              <colgroup>
-                <col width="*">
-                <col width="*">
-                <col width="*">
-                <col width="*">
-                <col width="*">
-              </colgroup>
-              <thead>
-              </thead>
-              <tbody>
-              <tr style="height: 45px !important;">
-                <td id="allStateTab" onclick="stateChange('')">
-                  <div class="clearfix">
-                    <div class="pull-left tdtitle" >
-                      전체
-                    </div>
-                    <div class="pull-right">
-                      <p class="price_txt md" >
-                        <strong class="" th:text="${totalData.totalCount}"></strong><small>건</small>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td id="requestStateTab" onclick="stateChange('REQUEST')">
-                  <div class="clearfix">
-                    <div class="pull-left tdtitle">
-                      요청
-                    </div>
-                    <div class="pull-right">
-                      <p class="price_txt md">
-                        <strong class="" th:text="${totalData.requestCount}"></strong><small>건</small>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td id="approveStateTab" onclick="stateChange('APPROVE')">
-                  <div class="clearfix">
-                    <div class="pull-left tdtitle">
-                      확인
-                    </div>
-                    <div class="pull-right">
-                      <p class="price_txt md">
-                        <strong class="" th:text="${totalData.approveCount}"></strong><small>건</small>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td id="completeStateTab" onclick="stateChange('COMPLETE')">
-                  <div class="clearfix">
-                    <div class="pull-left tdtitle">
-                      완료
-                    </div>
-                    <div class="pull-right">
-                      <p class="price_txt md">
-                        <strong class="" th:text="${totalData.completeCount}"></strong><small>건</small>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-
-                <td id="rejectStateTab" onclick="stateChange('REJECT')">
-                  <div class="clearfix">
-                    <div class="pull-left tdtitle">
-                      반려
-                    </div>
-                    <div class="pull-right">
-                      <p class="price_txt md">
-                        <strong class="" th:text="${totalData.rejectCount}"></strong><small>건</small>
-                      </p>
-                    </div>
-                  </div>
-                </td>
-
-              </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
-      </div>
 
 
-
-
-      <div class="tbHead">
-        <div class="clearfix">
-          <div class="pull-left">
-            <span class="boardText">총 <strong th:text="${data.totalElements}"></strong>건</span>
-          </div>
-          <div class="pull-right listContBtn">
-            <a href="/complain/complainForm" class="btn btn-sm whitegrey">
-              <i class="la la-plus"></i>민원 등록
-            </a>
-          </div>
+        <div class="tbHead">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <span class="boardText">총 <strong th:text="${data.totalElements}"></strong>건</span>
+                </div>
+                <div class="pull-right listContBtn">
+                    <a href="/complain/complainForm" class="btn btn-sm whitegrey">
+                        <i class="la la-plus"></i>민원 등록
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <table class="table">
-        <thead>
-        <tr>
-          <th class="text-center">번호</th>
-          <th class="text-center">민원인</th>
-          <th class="text-center">전화번호</th>
-          <th class="text-center">이메일</th>
-          <th class="text-center">제목</th>
-          <th class="text-center">담당자</th>
-          <th class="text-center">상태</th>
-          <th class="text-center">등록일</th>
-          <th class="text-center">관리</th>
-        </tr>
-        </thead>
-        <tbody>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">번호</th>
+                <th class="text-center">민원인</th>
+                <th class="text-center">전화번호</th>
+                <th class="text-center">이메일</th>
+                <th class="text-center">제목</th>
+                <th class="text-center">담당자</th>
+                <th class="text-center">상태</th>
+                <th class="text-center">등록일</th>
+                <th class="text-center">관리</th>
+            </tr>
+            </thead>
+            <tbody>
 
 
-          <tr th:each="item, index : ${data.content}">
+            <tr th:each="item, index : ${data.content}">
 
-            <td class="text-center" th:text="${index.index + 1}"></td>
-            <td class="text-center" th:text="${item.com_name}"></td>
-            <td class="text-center" th:text="${item.com_phone}"></td>
-            <td class="text-center" th:text="${item.com_email}"></td>
-            <td class="text-left" th:text="${item.com_title}"></td>
-            <td class="text-center" th:text="${item.manageName}"></td>
-            <td class="text-center" th:text="${item.com_state}"></td>
-            <td class="text-center" th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd')}"></td>
+                <td class="text-center" th:text="${index.index + 1}"></td>
+                <td class="text-center" th:text="${item.com_name}"></td>
+                <td class="text-center" th:text="${item.com_phone}"></td>
+                <td class="text-center" th:text="${item.com_email}"></td>
+                <td class="text-left" th:text="${item.com_title}"></td>
+                <td class="text-center" th:text="${item.manageName}"></td>
+                <td class="text-center" th:text="${item.com_state.value}"></td>
+                <td class="text-center" th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd')}"></td>
 
-            <td class="text-center">
-              <div class="tdBtnWrap">
-                <a th:href="@{/complain/complainDetail(id=${item.id})}" class="btn btn-xs btn-block">상세</a>
-              </div>
-            </td>
-  <!--          <td class="text-center">${item.manageName}</td>-->
-  <!--          <c:if test = "${item.com_state eq 'REQUEST'}"><td class="text-center cgreen">요청</td></c:if>-->
-  <!--          <c:if test = "${item.com_state eq 'APPROVE'}"><td class="text-center">확인</td></c:if>-->
-  <!--          <c:if test = "${item.com_state eq 'REJECT'}"><td class="text-center cred">반려</td></c:if>-->
-  <!--          <c:if test = "${item.com_state eq 'COMPLETE'}"><td class="text-center cblue">완료</td></c:if>-->
-  <!--          <td class="text-center cblue">완료</td>-->
-  <!--          <td class="text-center" th:text="${item}"></td>-->
-  <!--          <td class="text-center">-->
-  <!--            <div class="tdBtnWrap">-->
-  <!--              <a href="/complain/complainDetail?id=${item.id}" class="btn btn-xs btn-block">상세</a>-->
-  <!--              <c:if test="${item.com_state eq 'REJECT'}">-->
-  <!--                <a href="#" class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;" onclick="deleComplain('${item.id}')">삭제</a>-->
-  <!--              </c:if>-->
-  <!--            </div>-->
-          </tr>
-        </tbody>
+                <td class="text-center">
+                    <div class="tdBtnWrap">
+                        <a th:href="@{/complain/complainDetail(id=${item.id})}" class="btn btn-xs btn-block">상세</a>
+                    </div>
+                </td>
+                <!--              <c:if test="${item.com_state eq 'REJECT'}">-->
+                <!--                <a href="#" class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;" onclick="deleComplain('${item.id}')">삭제</a>-->
+                <!--              </c:if>-->
+            </tr>
+            </tbody>
 
-      </table>
+        </table>
     </div>
 
 
     <nav th:replace="layouts/mayPaging :: pagingFragment"></nav>
 
 
-  </div>
+</div>
+
 </html>
+
+<script>
+    function stateChange(state)
+    {
+        $("#com_state").val(state);
+        $("#searchForm").submit();
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#com_state").val("[[${searchData.com_state}]]");
+
+        switch ($("#com_state").val()) {
+            case "" : $("#allStateTab").css("background", "#ffffe7"); break;
+            case "REQUEST" : $("#requestStateTab").css("background", "#ffffe7"); break;
+            case "APPROVE" : $("#approveStateTab").css("background", "#ffffe7"); break;
+            case "COMPLETE" : $("#completeStateTab").css("background", "#ffffe7"); break;
+            case "REJECT" : $("#rejectStateTab").css("background", "#ffffe7"); break;
+        }
+    });
+
+</script>

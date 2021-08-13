@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layout}">
+
+<div layout:fragment="content">
+  <div class="title_box clearfix">
+    <div class="ttBox">
+      <h3 class="title">사용자 등록</h3>
+    </div>
+    <div class="location">
+      <ul class="clearfix">
+        <li class="first">
+          <a href="#"><i class="la la-home"></i></a>
+        </li>
+        <li>
+          <a href="#">설정</a>
+        </li>
+        <li>
+          <a href="#">사용자 조회</a>
+        </li>
+        <li class="bdln">
+          <strong class="active">사용자 등록</strong>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <div class="tbInfo">
+    <small><strong class="cgreen">*</strong>는 필수 입력 입니다.</small>
+  </div>
+  <form action="/joinMember" method="POST" onsubmit="return confirm('사용자를 등록 하시겠습니까?');">
+    <table class="table tbView">
+      <colgroup>
+        <col width="180">
+        <col width="*">
+      </colgroup>
+      <thead></thead>
+      <tbody>
+      <tr>
+        <th><strong class="cgreen">*</strong> 아이디</th>
+        <td>
+          <div class="inputBox price half2">
+            <input type="text" name="member_id" required="">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th><strong class="cgreen">*</strong> 비밀번호</th>
+        <td>
+          <div  class="inputdl">
+            <dl>
+              <dd>
+
+                <div class="inputBox inputBtnText2">
+                  <input type="text" name="member_pwd" required>
+                </div>
+
+              </dd>
+            </dl>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr>
+        <th>이름</th>
+        <td>
+          <div class="inputBox price half2">
+            <input type="text" name="member_name" required>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>전화번호</th>
+        <td>
+          <div class="inputBox price half2">
+            <input type="text" name="member_phone">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>권한</th>
+        <td>
+          <div class="mgt10" id="serviceChargeSettingArea" style="display: block;">
+            <div class="table-cell">
+              <div class="table-cell inline">
+                <div class="selectWrap sm">
+                  <div class="selectBox" >
+                    <select id="auth" name="auth">
+                      <option value="ROLE_ADMIN">관리자</option>
+                      <option value="ROLE_WORKER">매니저</option>
+                      <option value="ROLE_USER" selected>사용자</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+
+<!--      <tr>-->
+<!--        <th>부서</th>-->
+<!--        <td>-->
+<!--          <div  class="inputdl">-->
+<!--            <dl>-->
+<!--              <dd>-->
+<!--                <div class="inputBox inputBtnText2">-->
+<!--                  <input type="text" name="member_deptNm" ondblclick="openDeptPopup()" readonly id="member_deptNm" maxlength="20" placeholder="부서를 지정해주세요." th:value="${data.get().member_deptNm}">-->
+<!--                  <input type="hidden" name="member_dept" id="member_dept" value="${data.get().member_dept}">-->
+<!--                </div>-->
+<!--                <div class="inputBtnWrapper">-->
+<!--                  <div class="inputBtnWrap inputBtnWrap2">-->
+<!--                    <button type="button" class="inputBtn" onclick="openDeptPopup()">부서 선택</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </dd>-->
+<!--            </dl>-->
+<!--          </div>-->
+<!--        </td>-->
+<!--      </tr>-->
+      </tbody>
+    </table>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <div class="btnArea group">
+      <span> <a href="/manage/member" class="btn whitegrey">목록으로</a> </span>
+      <span> <button type="submit" class="btn blue-sub">저장</button> </span>
+    </div>
+  </form>
+
+</div>
+</html>
+

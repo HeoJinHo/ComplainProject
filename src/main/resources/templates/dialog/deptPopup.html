@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="modal fade" id="deptBrower" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-lg">
+      <div class="modal-wrap">
+        <div class="modal-header">
+          <h3 class="modal-title">부서선택</h3>
+        </div>
+
+        <div class="modal-body scroll-body">
+
+          <div class="table-responsive">
+            <table class="tbList">
+              <caption class="sr_only">부서 목록</caption>
+              <colgroup>
+                <col width="*">
+                <col width="*">
+              </colgroup>
+              <thead>
+              <tr>
+                <th>부서명</th>
+                <th>생성일자</th>
+              </tr>
+              </thead>
+              <tbody>
+              <th:block th:each="item : ${list}">
+                <tr th:attr="ondblclick=|selectDept('${item.id}', '${item.deptNm}')|">
+                  <td class="text-left" th:text="${item.deptNm}"></td>
+                  <td class="text-center" th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd')}"></td>
+
+                </tr>
+              </th:block>
+              </tbody>
+            </table>
+            <!--// tbList -->
+          </div>
+        </div>
+        <!--//modal-body-->
+
+
+
+        <div class="modal-footer">
+          <span><a href="javascript:closeDeptPop()" class="btn btn-sm bluegrey">닫기</a></span>
+          <!--                    <span><button type="button" class="btn btn-sm blue-sub" onclick="selectOk()">선택</button></span>-->
+        </div>
+        <!--//modal-footer-->
+
+      </div>
+      <!--//modal-wrap-->
+    </div>
+    <!--//modal-content-->
+  </div>
+  <!--//modal-dialog-->
+</div>
+<div class="modal-backdrop fade"></div>
+
+
+
+<script>
+
+  /**
+   * 선택완료
+   */
+  function selectDept(id, name) {
+    //데이터 넘김 (modal 부모 창의 request.js 함수 호출)
+    settingDeptPopData(id, name);
+  }
+
+  function settingDeptPopData(id, name) {
+    $("#member_deptNm").val(name);
+    $("#member_dept").val(id);
+
+    closeDeptPop();
+
+  }
+
+</script>
+
+</body>
+</html>

@@ -53,6 +53,7 @@ public class MemberManageController {
     public ModelAndView memberDetail(String id)
     {
         ModelAndView mv = new ModelAndView();
+        mv.setViewName("manage/memberDetail");
         mv.addObject("item", memberSv.selectOne(id));
         return mv;
     }

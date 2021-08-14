@@ -31,14 +31,14 @@
     <nav th:replace="layouts/searchBase :: searchBaseFragment"></nav>
     <div class="cardWrap list">
         <div class="cardInner">
-            <form class="search_filter" id="searchForm" action="/complain/complainList" method="get">
+            <form class="search_filter" id="searchForm" action="/manage/member" method="get">
                 <input type="hidden" id="page" name="page" value="">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="formEleWrap">
                             <label class="label_tit" for="p_member_id">사용자ID</label>
                             <div class="inputBox">
-                                <input type="text" name="searchName" id="p_member_id" th:value="${searchData.memberID}"
+                                <input type="text" name="memberID" id="p_member_id" th:value="${searchData.memberID}"
                                        placeholder="사용자 아이디를 입력하세요.">
                             </div>
                         </div>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="modal fade" id="hisBrower" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content modal-lg">
+      <div class="modal-wrap">
+        <div class="modal-header">
+          <h3 class="modal-title">담당자 변경이력</h3>
+        </div>
+
+        <div class="modal-body scroll-body">
+          <div class="table-responsive">
+            <table class="tbList">
+              <caption class="sr_only">담당자 목록</caption>
+              <colgroup>
+                <col width="*">
+                <col width="*">
+                <col width="*">
+              </colgroup>
+              <thead>
+              <tr>
+                <th>변경전</th>
+                <th>변경후</th>
+                <th>변경일자</th>
+              </tr>
+              </thead>
+              <tbody>
+              <th:block th:each="item : ${list}">
+                <tr>
+                  <td class="text-center" th:text="${item.bfMemberNm} + ' (' +  ${item.bfMemberID} + ')'"></td>
+                  <td class="text-center" th:text="${item.afMemberNm} + ' (' +  ${item.afMemberID} + ')'"></td>
+                  <td class="text-center" th:text="${#dates.format(item.moveDate, 'yyyy-MM-dd')}"></td>
+                </tr>
+              </th:block>
+<!--              <c:if test="${fn:length(list) == 0}">-->
+<!--                <tr><td colspan="3" class="text-center">이력내역이 없습니다.</td></tr>-->
+<!--              </c:if>-->
+              </tbody>
+            </table>
+            <!--// tbList -->
+          </div>
+        </div>
+        <!--//modal-body-->
+
+
+
+        <div class="modal-footer">
+          <span><a href="javascript:closeHisPop()" class="btn btn-sm bluegrey">닫기</a></span>
+        </div>
+        <!--//modal-footer-->
+
+      </div>
+      <!--//modal-wrap-->
+    </div>
+    <!--//modal-content-->
+  </div>
+  <!--//modal-dialog-->
+</div>
+<div class="modal-backdrop fade"></div>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layout}">
+
+
+<div layout:fragment="content">
+  <div class="title_box clearfix">
+    <div class="ttBox">
+      <h3 class="title">설문조사 관리</h3>
+    </div>
+    <div class="location">
+      <ul class="clearfix">
+        <li class="first">
+          <a href="#"><i class="la la-home"></i></a>
+        </li>
+        <li>
+          <a href="#">설정</a>
+        </li>
+        <li class="bdln">
+          <strong class="active">설문조사 관리</strong>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <nav th:replace="layouts/searchBase :: searchBaseFragment"></nav>
+  <div class="cardWrap list">
+    <div class="cardInner">
+      <form class="search_filter" id="searchForm" action="/monitorManage" method="get">
+        <input type="hidden" id="page" name="page" value="">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="formEleWrap">
+              <label class="label_tit" for="searchTitle">설문조사명</label>
+              <div class="inputBox">
+                <input type="text" name="searchTitle" id="searchTitle" th:value="${searchData.searchTitle}"
+                       placeholder="검색할 설문조사명을 입력해주세요.">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="formEleWrap">
+              <label class="label_tit" for="com_state">사용유무</label>
+              <div class="selectBox">
+                <select id="com_state" name = 'useYn'>
+                  <option value="">전체</option>
+                  <option value="USE">사용</option>
+                  <option value="NONE_USE">미사용</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <nav th:replace="layouts/dateSearch :: dateSearchFragment"></nav>
+        </div>
+
+        <div class="btnWrap">
+          <button class="btn btn-sm bluegrey" type="button" id="resetBtn">초기화</button>
+          <button class="btn btn-sm blue-sub btn_search" type="submit">검색</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="tbHead">
+      <div class="clearfix">
+        <div class="pull-left">
+          <span class="boardText">총 <strong th:text="${data.totalElements}"></strong>건</span>
+        </div>
+        <div class="pull-right listContBtn">
+          <a href="/monitor/monitorForm" class="btn btn-sm whitegrey">
+            <i class="la la-plus"></i>설문조사 등록
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="text-center">설문조사명</th>
+        <th class="text-center">설문조사 내용</th>
+        <th class="text-center">시용유무</th>
+        <th class="text-center">등록일자</th>
+        <th class="text-center">관리</th>
+      </tr>
+      </thead>
+      <tbody>
+
+
+      <tr th:each="item : ${data.content}">
+
+        <td class="text-center" th:text="${item.title}"></td>
+        <td class="text-center" th:text="${item.content}"></td>
+        <td class="text-center" th:text="${item.useYn.value}"></td>
+        <td class="text-center" th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd')}"></td>
+
+        <td class="text-center">
+          <div class="tdBtnWrap">
+            <a class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;" th:attr="onclick=|deleMonitor('${item.id}')|">삭제</a>
+          </div>
+        </td>
+
+      </tbody>
+
+    </table>
+  </div>
+
+
+  <nav th:replace="layouts/mayPaging :: pagingFragment"></nav>
+
+
+</div>
+
+</html>
+<script>
+  $(document).ready(function () {
+    $("#com_state").val("[[${searchData.useYn}]]");
+
+  });
+
+  function deleMonitor(id)
+  {
+    const crm = confirm("정말 삭제 하시겠습니까?");
+    if(crm)
+    {
+      location.href = "/monitor/monitorDelete?id="+id;
+    }
+  }
+</script>

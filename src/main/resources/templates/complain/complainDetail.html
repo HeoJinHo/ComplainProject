@@ -7,7 +7,7 @@
 <div layout:fragment="content">
     <div class="title_box clearfix">
         <div class="ttBox">
-            <h3 class="title">민원등록</h3>
+            <h3 class="title">민원상세</h3>
         </div>
         <div class="location">
             <ul class="clearfix">
@@ -18,7 +18,10 @@
                     <a href="#">민원관리</a>
                 </li>
                 <li>
-                    <a href="#">민원관리</a>
+                    <a href="#">전체민원</a>
+                </li>
+                <li>
+                    <a href="#">민원목록</a>
                 </li>
                 <li class="bdln">
                     <strong class="active">민원상세</strong>
@@ -26,7 +29,6 @@
             </ul>
         </div>
     </div>
-
 
 
     <form action="/complain/complainState" method="POST" id="complainForm" onsubmit="return confirm('민원을 수정 하시겠습니까?');">
@@ -85,7 +87,7 @@
 
                             <div class="table-cell inline">
                                 <div class="selectWrap sm">
-                                    <div class="selectBox" >
+                                    <div class="selectBox">
                                         <select id="com_state" name="com_state">
                                             <option value="REQUEST">요청</option>
                                             <option value="APPROVE">확인</option>
@@ -101,6 +103,142 @@
                 </td>
             </tr>
 
+            <tr>
+                <th>담당자 변경</th>
+                <td colspan="2">
+                    <div class="inputdl">
+                        <dl>
+                            <dd>
+                                <div class="inputBox inputBtnText2">
+                                    <input type="text" name="manageName" ondblclick="openUserPopup()" readonly
+                                           id="complainManageNm" maxlength="20" placeholder="담당자를 지정해주세요."
+                                           th:value="${data.get().manageName}">
+                                    <input type="hidden" name="manageID" id="complainManage" maxlength="20"
+                                           placeholder="담당자를 지정해주세요." th:value="${data.get().manageID}">
+                                </div>
+                                <div class="inputBtnWrapper">
+                                    <div class="inputBtnWrap inputBtnWrap2">
+                                        <th:block th:if="${data.get().manageName eq ''}">
+                                            <button type="button" class="inputBtn" onclick="openUserPopup()">담당자 변경
+                                            </button>
+                                        </th:block>
+                                        <th:block th:if="${data.get().manageName ne ''}">
+                                            <button type="button" class="inputBtn" onclick="openUserPopup()">담당자 선택
+                                            </button>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="inputBtnWrapper">
+                                    <div class="inputBtnWrap inputBtnWrap2">
+                                        <button type="button" class="inputBtn"
+                                                th:attr="onclick=|openHisPopup('${data.get().id}')|">담당자 변경이력
+                                        </button>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </td>
+            </tr>
+
+            <tr id="comentText">
+                <th>답변</th>
+                <td class="inBlock_elemt" colspan="2">
+                    <div class="textareaWrap">
+                        <textarea name="complainComment" th:text="${data.get().complainComment}"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+
+
+
+            <th:block th:if="${#strings.equals(data.get().com_state, 'COMPLETE')}">
+
+                <th:block th:if="${not #lists.isEmpty(data.get().monitors)}">
+<!--                <th:block th:if="${#lists.size(data.get().monitors) > 0}">-->
+                    <tr th:each="item2, status : ${data.get().monitors}">
+                        <th:block th:if="${status.first}">
+                            <th th:rowspan="${data.get().monitors.size}">만족도 평가</th>
+                        </th:block>
+                        <th style="width: 45%;" th:text="${status.index + 1} + '. '+ ${item2.content}"></th>
+
+                        <td class="inBlock_elemt" colspan="2">
+                            <input type="hidden" th:value="${item2.id}" th:name="'monitors['+${status.index}+'].id'">
+                            <input type="hidden" th:value="${item2.title}" th:name="'monitors['+${status.index}+'].title'">
+                            <input type="hidden" th:value="${item2.content}" th:name="'monitors['+${status.index}+'].content'">
+
+                            <div class="inBlock">
+                                <div class="input_radio first">
+                                    <input type="radio" th:id="'star5'+${status.index}" th:name="'monitors['+${status.index}+'].survey'" value="5" th:checked="${item2.survey == '5'}">
+                                    <label th:for="'star5'+${status.index}">매우 만족</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star4'+${status.index}" th:name="'monitors['+${status.index}+'].survey'" value="4" th:checked="${item2.survey == '4'}">
+                                    <label th:for="'star4'+${status.index}">만족</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star3'+${status.index}" th:name="'monitors['+${status.index}+'].survey'" value="3" th:checked="${item2.survey == '3'}">
+                                    <label th:for="'star3'+${status.index}">보통</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star2'+${status.index}" th:name="'monitors['+${status.index}+'].survey'" value="2" th:checked="${item2.survey == '2'}">
+                                    <label th:for="'star2'+${status.index}">불만족</label>
+                                </div>
+                                <div class="input_radio last">
+                                    <input type="radio" th:id="'star1'+${status.index}" th:name="'monitors['+${status.index}+'].survey'" value="1" th:checked="${item2.survey == '1'}">
+                                    <label th:for="'star1'+${status.index}">매우 불만족</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </th:block>
+
+                <th:block th:if="${#lists.isEmpty(data.get().monitors)}">
+                    <tr th:each="item2, status : ${monitorList}">
+                        <th:block th:if="${status.first}">
+                            <th th:rowspan="${monitorList.size}">만족도 평가</th>
+                        </th:block>
+
+                        <th style="width: 45%;" th:text="${status.index + 1} + '. '+ ${item2.content}"></th>
+                        <td class="inBlock_elemt" colspan="2">
+                            <input type="hidden" th:value="${item2.id}" th:name="'monitors['+${status.index}+'].id'">
+                            <input type="hidden" th:value="${item2.title}" th:name="'monitors['+${status.index}+'].title'">
+                            <input type="hidden" th:value="${item2.content}"
+                                   th:name="'monitors['+${status.index}+'].content'">
+                            <div class="inBlock">
+                                <div class="input_radio first">
+                                    <input type="radio" th:id="'star5'+${status.index}"
+                                           th:name="'monitors['+${status.index}+'].survey'" value="5">
+                                    <label th:for="'star5'+${status.index}">매우 만족</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star4'+${status.index}"
+                                           th:name="'monitors['+${status.index}+'].survey'" value="4">
+                                    <label th:for="'star4'+${status.index}">만족</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star3'+${status.index}"
+                                           th:name="'monitors['+${status.index}+'].survey'" value="3">
+                                    <label th:for="'star3'+${status.index}">보통</label>
+                                </div>
+                                <div class="input_radio">
+                                    <input type="radio" th:id="'star2'+${status.index}"
+                                           th:name="'monitors['+${status.index}+'].survey'" value="2">
+                                    <label th:for="'star2'+${status.index}">불만족</label>
+                                </div>
+                                <div class="input_radio last">
+                                    <input type="radio" th:id="'star1'+${status.index}"
+                                           th:name="'monitors['+${status.index}+'].survey'" value="1" th:checked="${item2.survey == '1'}">
+                                    <label th:for="'star1'+${status.index}">매우 불만족</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </th:block>
+
+            </th:block>
+
 
             </tbody>
         </table>
@@ -111,8 +249,6 @@
             <span> <button type="submit" class="btn blue-sub">저장</button> </span>
         </div>
 
-        <input type="hidden" name="manageName" ondblclick="openUserPopup()" readonly id="complainManageNm" maxlength="20" placeholder="담당자를 지정해주세요." th:value="${data.get().manageName}">
-        <input type="hidden" name="manageID" id="complainManage" maxlength="20" placeholder="담당자를 지정해주세요." th:value="${data.get().manageID}">
 
         <input type="hidden" name="id" th:value="${data.get().id}">
         <input type="hidden" name="com_name" th:value="${data.get().com_name}">
@@ -126,11 +262,74 @@
 
     </form>
     <div id="userPopup"></div>
+    <div id="hisPopup"></div>
 </div>
 </html>
 <script>
+
+    /**
+     * 담당자 불러오기 팝업 오픈
+     * @param memberID
+     */
+    var openUserPopup = function (param) {
+        var url = "/dialog/userPopup";
+        if (param !== undefined)
+            url += param;
+
+        $("#userPopup").load(url, function () {
+            $("#userPopup > .modal-backdrop").addClass("in");
+            $("#goodsBrower").show();
+        });
+    };
+
+    /**
+     * 담당자 불러오기 팝업 닫기
+     */
+    var closeUsersPop = function () {
+        $('#userPopup').empty();
+    };
+
+
+    /**
+     * 담당자 변경이력 팝업 오픈
+     * @param memberID
+     */
+    var openHisPopup = function (param) {
+        var url = "/dialog/moveHis?id=";
+        if (param !== undefined)
+            url += param;
+
+        $("#hisPopup").load(url, function () {
+            $("#hisPopup > .modal-backdrop").addClass("in");
+            $("#hisBrower").show();
+        });
+    };
+
+
+    /**
+     * 상품 불러오기 팝업 닫기
+     */
+    var closeHisPop = function () {
+        $('#hisPopup').empty();
+    };
+
+
     $(document).ready(function () {
+
         $("#com_state").val("[[${data.get().com_state}]]");
+
+        if ($("#com_state").val() === 'REQUEST' || $("#com_state").val() === 'APPROVE') {
+            $("#comentText").hide();
+        }
+
+        $("#com_state").change(function () {
+            if ($("#com_state").val() === 'REQUEST' || $("#com_state").val() === 'APPROVE') {
+                $("#comentText").hide();
+            } else {
+                $("#comentText").show()
+            }
+        });
+
 
     });
 

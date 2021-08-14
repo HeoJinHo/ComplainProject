@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="modal fade" id="goodsBrower" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-lg">
+            <div class="modal-wrap">
+                <div class="modal-header">
+                    <h3 class="modal-title">담당자 불러오기</h3>
+                </div>
+
+                <div class="modal-body scroll-body">
+                    <div class="browser_search ">
+                        <div class="searchLeft">
+                            <div class="formEleWrap">
+                                <label class="label_tit sr_only" for="searchGoodsName">담당자명</label>
+                                <div class="inputBox">
+                                    <input type="text" id="searchGoodsName" value="" placeholder="담당자명을 입력해 주세요.">
+                                </div>
+                            </div>
+                            <!--// formEleWrap -->
+                        </div>
+                        <div class="searchRight">
+                            <div class="formEleWrap">
+                                <button type="submit" class="btn btn-block blue-sub" onclick="goodsSearch()">검색</button>
+                            </div>
+                            <!--// formEleWrap -->
+                        </div>
+                    </div>
+                    <!--// browser_search -->
+
+                    <div class="table-responsive">
+                        <table class="tbList">
+                            <caption class="sr_only">담당자 목록</caption>
+                            <colgroup>
+                                <col width="200">
+                                <col width="*">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>아이디</th>
+                                <th>담당자명</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="item : ${list}">
+                                <tr th:attr="ondblclick=|selectOk('${item.member_id}', '${item.member_name}')|">
+                                    <td class="text-left" th:text="${item.member_id}">
+
+                                    </td>
+                                    <td class="text-left" th:text="${item.member_name}">
+                                    </td>
+
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                        <!--// tbList -->
+                    </div>
+                </div>
+                <!--//modal-body-->
+
+
+
+                <div class="modal-footer">
+                    <span><a href="javascript:closeUsersPop()" class="btn btn-sm bluegrey">닫기</a></span>
+<!--                    <span><button type="button" class="btn btn-sm blue-sub" onclick="selectOk()">선택</button></span>-->
+                </div>
+                <!--//modal-footer-->
+
+            </div>
+            <!--//modal-wrap-->
+        </div>
+        <!--//modal-content-->
+    </div>
+    <!--//modal-dialog-->
+</div>
+<div class="modal-backdrop fade"></div>
+
+
+
+<script>
+
+    function selectOk(id, name) {
+        //데이터 넘김 (modal 부모 창의 request.js 함수 호출)
+        settingGoodsPopData(id, name);
+    }
+
+
+    function settingGoodsPopData(id, name) {
+        $("#complainManageNm").val(name);
+        $("#complainManageNm").prop('readonly', true);
+        $("#complainManage").val(id);
+
+        closeUsersPop();
+
+    }
+
+</script>
+
+</body>
+</html>

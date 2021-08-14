@@ -154,6 +154,9 @@ public class ComplainController {
     public String complainState(@AuthenticationPrincipal Member member, Complain complain) {
         System.out.println(complain.getMonitors());
 
+        System.out.println(member.getMember_id());
+        System.out.println(complain.getId());
+
         String rtn = "redirect:/complain/complainDetail?id=" + complain.getId();
         if (!member.getAuth().equals("ROLE_ADMIN"))
             rtn = "redirect:/complain/myComplainDetail?id=" + complain.getId();

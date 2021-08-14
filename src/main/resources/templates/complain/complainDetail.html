@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layout}">
+
+<div layout:fragment="content">
+    <div class="title_box clearfix">
+        <div class="ttBox">
+            <h3 class="title">민원등록</h3>
+        </div>
+        <div class="location">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="#"><i class="la la-home"></i></a>
+                </li>
+                <li>
+                    <a href="#">민원관리</a>
+                </li>
+                <li>
+                    <a href="#">민원관리</a>
+                </li>
+                <li class="bdln">
+                    <strong class="active">민원상세</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <form action="/complain/complainState" method="POST" id="complainForm" onsubmit="return confirm('민원을 수정 하시겠습니까?');">
+        <table class="table tbView">
+            <colgroup>
+                <col width="180">
+                <col width="*">
+                <col width="*">
+            </colgroup>
+            <thead></thead>
+            <tbody>
+            <tr>
+                <th>민원인</th>
+                <td colspan="2" th:text="${data.get().com_name}"></td>
+            </tr>
+            <tr>
+                <th>전화번호</th>
+                <td colspan="2" th:text="${data.get().com_phone}"></td>
+            </tr>
+
+            <tr>
+                <th>이메일</th>
+                <td colspan="2" th:text="${data.get().com_email}"></td>
+            </tr>
+            <tr>
+                <th>우편번호</th>
+                <td colspan="2" th:text="${data.get().com_zip_code}"></td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td colspan="2" th:text="${data.get().com_address}"></td>
+            </tr>
+            <tr>
+                <th>상세주소</th>
+                <td colspan="2" th:text="${data.get().com_address_detail}"></td>
+            </tr>
+
+            <tr>
+                <th>민원제목</th>
+                <td colspan="2" th:text="${data.get().com_title}"></td>
+            </tr>
+            <tr>
+                <th><strong class="cgreen">*</strong> 민원내용</th>
+                <td class="inBlock_elemt" colspan="2">
+                    <div class="textareaWrap">
+                        <textarea readonly th:text="${data.get().com_content}"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th>상태</th>
+                <td colspan="2">
+                    <div class="mgt10" id="serviceChargeSettingArea" style="display: block;">
+                        <div class="table-cell">
+
+                            <div class="table-cell inline">
+                                <div class="selectWrap sm">
+                                    <div class="selectBox" >
+                                        <select id="com_state" name="com_state">
+                                            <option value="REQUEST">요청</option>
+                                            <option value="APPROVE">확인</option>
+                                            <option value="COMPLETE">완료</option>
+                                            <option value="REJECT">반려</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <div class="btnArea group">
+            <span> <a href="/complain/complainList" class="btn whitegrey">목록으로</a> </span>
+            <span> <button type="submit" class="btn blue-sub">저장</button> </span>
+        </div>
+
+        <input type="hidden" name="manageName" ondblclick="openUserPopup()" readonly id="complainManageNm" maxlength="20" placeholder="담당자를 지정해주세요." th:value="${data.get().manageName}">
+        <input type="hidden" name="manageID" id="complainManage" maxlength="20" placeholder="담당자를 지정해주세요." th:value="${data.get().manageID}">
+
+        <input type="hidden" name="id" th:value="${data.get().id}">
+        <input type="hidden" name="com_name" th:value="${data.get().com_name}">
+        <input type="hidden" name="com_phone" th:value="${data.get().com_phone}">
+        <input type="hidden" name="com_email" th:value="${data.get().com_email}">
+        <input type="hidden" name="com_zip_code" th:value="${data.get().com_zip_code}">
+        <input type="hidden" name="com_address" th:value="${data.get().com_address}">
+        <input type="hidden" name="com_address_detail" th:value="${data.get().com_address_detail}">
+        <input type="hidden" name="com_title" th:value="${data.get().com_title}">
+        <input type="hidden" name="com_content" th:value="${data.get().com_content}">
+
+    </form>
+    <div id="userPopup"></div>
+</div>
+</html>
+<script>
+    $(document).ready(function () {
+        $("#com_state").val("[[${data.get().com_state}]]");
+
+    });
+
+</script>

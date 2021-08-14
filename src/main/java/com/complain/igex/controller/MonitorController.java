@@ -30,6 +30,7 @@ public class MonitorController {
         mv.setViewName("monitorManage/monitorList");
         mv.addObject("data", monitorSv.searchAll(pageable, seachData));
         mv.addObject("searchData", seachData);
+        mv.addObject("pageType", "setting");
         return mv;
     }
 
@@ -39,6 +40,7 @@ public class MonitorController {
     {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("monitorManage/monitorForm");
+        mv.addObject("pageType", "setting");
         return mv;
     }
 

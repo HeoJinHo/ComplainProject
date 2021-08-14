@@ -75,7 +75,6 @@ public class ComplainController {
         if ("ROLE_WORKER".equals(member.getAuth())) {
             seachData.setDept(member.getMember_dept());
             setSearchData.setDept(member.getMember_dept());
-            System.out.println(member.getMember_dept());
         }
 
         if("ROLE_USER".equals(member.getAuth())){

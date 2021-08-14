@@ -59,7 +59,7 @@ public class ComplainController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER', 'ROLE_USER')")
     @GetMapping("/complainList")
     public ModelAndView complainList
             (
@@ -75,6 +75,12 @@ public class ComplainController {
         if ("ROLE_WORKER".equals(member.getAuth())) {
             seachData.setDept(member.getMember_dept());
             setSearchData.setDept(member.getMember_dept());
+            System.out.println(member.getMember_dept());
+        }
+
+        if("ROLE_USER".equals(member.getAuth())){
+            seachData.setManageID(member.getMember_id());
+            setSearchData.setManageID(member.getMember_id());
         }
 
         mv.addObject("data", complainSv.searchAll(pageable, seachData));

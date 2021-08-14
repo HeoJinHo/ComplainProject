@@ -76,6 +76,7 @@
                             </ul>
                         </li>
 
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' ">
                             <a href="#">설정</a>
                             <ul>
@@ -84,6 +85,7 @@
                                 <li><a href="/monitorManage">설문조사 관리</a></li>
                             </ul>
                         </li>
+                        </th:block>
                     </ul>
 
                 </nav>

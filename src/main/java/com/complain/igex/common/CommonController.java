@@ -92,7 +92,7 @@ public class CommonController {
         if ("ROLE_ADMIN".equals(member.getAuth()) || "ROLE_WORKER".equals(member.getAuth())) {
             return "redirect:complain/complainList";
         } else {
-            return "redirect:complain/myComplainList";
+            return "redirect:complain/complainList";
 //            return "redirect:home2";
         }
     }

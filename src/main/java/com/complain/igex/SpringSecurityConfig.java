@@ -50,6 +50,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
                 .antMatchers("/**").access("ROLE_ADMIN")
                 .antMatchers("/admin/**").access("ROLE_ADMIN")
                 .antMatchers("/manage/**").access("ROLE_ADMIN")
+                .antMatchers("/common/**").access("ROLE_ADMIN")
                 .antMatchers("/**").authenticated();
         http
                 // 로그인 페이지 및 성공 url, handler 그리고 로그인 시 사용되는 id, password 파라미터 정의

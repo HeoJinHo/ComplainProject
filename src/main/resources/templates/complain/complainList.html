@@ -210,12 +210,9 @@
                         </th:block>
                     </div>
                 </td>
-
-
-
-                <!--              <c:if test="${item.com_state eq 'REJECT'}">-->
-                <!--                <a href="#" class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;" onclick="deleComplain('${item.id}')">삭제</a>-->
-                <!--              </c:if>-->
+            </tr>
+            <tr th:if="${data.content.size() == 0}">
+                <td class="text-center" colspan="9">조회 결과가 없습니다.</td>
             </tr>
             </tbody>
 

@@ -84,7 +84,6 @@ public class ComplainSvImp implements ComplainSv {
                 updateHis(complain, memberID, bfMember, dfMemberNm);
             }
         }
-        System.out.println(complain.getReg_date());
         mongoRepository.save(complain);
 
     }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -18,5 +19,13 @@ public class CommonCode
     @Id
     String id;
 
+    String name;
+
+    String userID;
+
+    String userName;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    Date reg_date;
 
 }

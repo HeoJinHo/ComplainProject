@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 <header th:fragment="headerFragment">
     <!--    <div style="border: 1px solid green">-->
     <!--        header.html 입니다.-->
     <!--    </div>-->
     <title>민원관리</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 
     <div class="header">
         <div class="header_top">
@@ -27,6 +31,20 @@
 
                     <div class="util_user">
                         <ul>
+                            <li>
+                                <a th:onclick="alarmTop5()" class="utilBtn" data-toggle="dropdown">
+                                    <i id="alarmIcon" class="images i_alert"></i>
+                                </a>
+                                <div class="dropdown-menu alertBox">
+                                    <div class="alertTT">알림내역<a href="#" class="close"><i class="la la-close"></i> 닫기</a></div>
+                                    <ul id="alarmTop5Content"></ul>
+                                    <p>
+                                        <a href="/alarm/list" class="btn_alertList"><i class="la la-bell" aria-hidden="true"></i> 알림 모두 보기</a>
+                                    </p>
+                                </div>
+
+                            </li>
+
                             <li class="userStatus">
                                 <div class="ust ust_2">
                                     <a href="#" class="userInfoShow">
@@ -87,7 +105,7 @@
                                 <li><a href="/manage/member">사용자 조회</a></li>
                                 <li><a href="/dept/deptList">부서관리</a></li>
                                 <li><a href="/monitorManage">설문조사 관리</a></li>
-                                <li><a href="/monitorManage">민원 종류 및 담당자 설정</a></li>
+                                <li><a href="/common/codeList">민원 종류 및 담당자 설정</a></li>
                             </ul>
                         </li>
                         </th:block>

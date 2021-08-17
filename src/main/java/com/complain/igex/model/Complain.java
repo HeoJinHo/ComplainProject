@@ -23,6 +23,8 @@ public class Complain
 
     String com_name;
 
+    String com_pwd;
+
     String com_phone;
 
     String com_email;
@@ -36,6 +38,8 @@ public class Complain
     String com_title;
 
     String com_content;
+
+    String commonCode;
 
     ComplainState com_state;
 

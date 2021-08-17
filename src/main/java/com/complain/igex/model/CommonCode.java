@@ -1,5 +1,6 @@
 package com.complain.igex.model;
 
+import com.complain.igex.model.cenum.UseYn;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -19,11 +20,13 @@ public class CommonCode
     @Id
     String id;
 
-    String name;
+    String codeName;
 
     String userID;
 
     String userName;
+
+    UseYn useYn;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     Date reg_date;

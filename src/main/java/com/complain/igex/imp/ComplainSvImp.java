@@ -1,14 +1,19 @@
 package com.complain.igex.imp;
 
+import com.complain.igex.data.Notify;
+import com.complain.igex.model.CommonCode;
 import com.complain.igex.model.Complain;
 import com.complain.igex.model.ComplainMoveHis;
 import com.complain.igex.model.cenum.ComplainState;
+import com.complain.igex.repository.CommonCodeRepository;
 import com.complain.igex.repository.ComplainMoveHisRepository;
 import com.complain.igex.repository.ComplainRepository;
+import com.complain.igex.repository.NotifyRepositorty;
 import com.complain.igex.searchData.SeachData;
 import com.complain.igex.sv.ComplainSv;
 import com.complain.igex.sv.MemberSv;
 import com.complain.igex.sv.MongoSupportSv;
+import com.complain.igex.sv.NotifySv;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -37,6 +42,10 @@ public class ComplainSvImp implements ComplainSv {
 
     private final MemberSv memberSv;
 
+    private final CommonCodeRepository repository;
+
+    private final NotifySv notifySv;
+
     @Override
     public Page<Complain> searchAll(Pageable pageable, SeachData seachData) {
         return mongoSupportSv.makePaging(Complain.class, pageable, seachData);
@@ -59,7 +68,20 @@ public class ComplainSvImp implements ComplainSv {
     {
         complain.setCom_state(ComplainState.REQUEST);
         complain.setReg_date(new Date());
-        mongoTemplate.insert(complain);
+
+        Optional<CommonCode> commonCode = repository.findById(complain.getCommonCode());
+
+
+        if (commonCode.isPresent()) {
+            complain.setManageID(commonCode.get().getUserID());
+            complain.setManageName(commonCode.get().getUserName());
+            complain.setMemberInfo(memberSv.selectOne(commonCode.get().getUserID()));
+
+        }
+
+        Complain insert = mongoTemplate.insert(complain);
+
+        commonCode.ifPresent(code -> notifySv.insertAlram(code.getUserID(), "민원이 등록되었습니다.", complain.getCom_title(), insert.getId()));
 
 
     }
@@ -82,6 +104,8 @@ public class ComplainSvImp implements ComplainSv {
             if (!bfMember.equals(complain.getManageID())){
                 complain.setMemberInfo(memberSv.selectOne(complain.getManageID()));
                 updateHis(complain, memberID, bfMember, dfMemberNm);
+                System.out.println(complain.getManageID());
+                notifySv.updateAlram(complain.getManageID(), "민원이관", complain.getCom_title(), complain.getId());
             }
         }
         mongoRepository.save(complain);

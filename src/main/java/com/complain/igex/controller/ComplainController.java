@@ -4,8 +4,10 @@ import com.complain.igex.model.Complain;
 import com.complain.igex.model.Member;
 import com.complain.igex.model.cenum.ComplainState;
 import com.complain.igex.searchData.SeachData;
+import com.complain.igex.sv.CommonCodeSv;
 import com.complain.igex.sv.ComplainSv;
 import com.complain.igex.sv.MonitorSv;
+import com.complain.igex.sv.NotifySv;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,9 +33,15 @@ public class ComplainController {
 
     private final MonitorSv monitorSv;
 
-    public ComplainController(ComplainSv complainSv, MonitorSv monitorSv) {
+    private final CommonCodeSv commonCodeSv;
+
+    private final NotifySv notifySv;
+
+    public ComplainController(ComplainSv complainSv, MonitorSv monitorSv, CommonCodeSv commonCodeSv, NotifySv notifySv) {
         this.complainSv = complainSv;
         this.monitorSv = monitorSv;
+        this.commonCodeSv = commonCodeSv;
+        this.notifySv = notifySv;
     }
 
 
@@ -121,12 +129,14 @@ public class ComplainController {
     }
 
     @GetMapping("/complainDetail")
-    public ModelAndView complainDetail(String id) {
+    public ModelAndView complainDetail(String id, @AuthenticationPrincipal Member member) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainDetail");
         mv.addObject("data", complainSv.findOne(id));
+        notifySv.readNotify(id, member.getMember_id());
         mv.addObject("pageType", "complain");
         mv.addObject("monitorList", monitorSv.allMonitor());
+        mv.addObject("useYnList", commonCodeSv.getListAll());
         return mv;
     }
 
@@ -134,6 +144,7 @@ public class ComplainController {
     public ModelAndView complainForm() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/complainForm");
+        mv.addObject("useYnList", commonCodeSv.getListAll());
         mv.addObject("pageType", "complain");
         return mv;
     }
@@ -157,14 +168,10 @@ public class ComplainController {
 
     @PostMapping("/complainState")
     public String complainState(@AuthenticationPrincipal Member member, Complain complain) {
-        System.out.println(complain.getMonitors());
-
-        System.out.println(member.getMember_id());
-        System.out.println(complain.getId());
 
         String rtn = "redirect:/complain/complainDetail?id=" + complain.getId();
         if (!member.getAuth().equals("ROLE_ADMIN"))
-            rtn = "redirect:/complain/myComplainDetail?id=" + complain.getId();
+            rtn = "redirect:/complain/complainDetail?id=" + complain.getId();
 
         complainSv.complainStateUpdate(complain, member.getMember_id());
         return rtn;
@@ -172,7 +179,7 @@ public class ComplainController {
 
 
     @GetMapping("/myComplainDetail")
-    public ModelAndView myComplainDetail(String id) {
+    public ModelAndView myComplainDetail(String id, @AuthenticationPrincipal Member member) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("complain/myComplainDetail");
         mv.addObject("data", complainSv.findOne(id));

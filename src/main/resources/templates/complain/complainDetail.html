@@ -83,6 +83,30 @@
             </tr>
 
             <tr>
+                <th>민원유형</th>
+                <td>
+                    <div class="mgt10" id="serviceChargeSettingArea2" style="display: block;">
+                        <div class="table-cell">
+
+                            <div class="table-cell inline">
+                                <div class="selectWrap sm">
+                                    <div class="selectBox" >
+                                        <select id="commonCode" name="commonCode">
+                                            <th:block th:each="item : ${useYnList}">
+                                                <option th:value="${item.id}" th:text="${item.codeName}"></option>
+                                            </th:block>>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
                 <th>상태</th>
                 <td colspan="2">
                     <div class="mgt10" id="serviceChargeSettingArea" style="display: block;">
@@ -254,6 +278,7 @@
 
 
         <input type="hidden" name="id" th:value="${data.get().id}">
+        <input type="hidden" name="com_pwd" th:value="${data.get().com_pwd}">
         <input type="hidden" name="com_name" th:value="${data.get().com_name}">
         <input type="hidden" name="com_phone" th:value="${data.get().com_phone}">
         <input type="hidden" name="com_email" th:value="${data.get().com_email}">
@@ -320,6 +345,9 @@
     $(document).ready(function () {
 
         $("#com_state").val("[[${data.get().com_state}]]");
+
+        $("#commonCode").val("[[${data.get().commonCode}]]");
+
 
         if ($("#com_state").val() === 'REQUEST' || $("#com_state").val() === 'APPROVE') {
             $("#comentText").hide();

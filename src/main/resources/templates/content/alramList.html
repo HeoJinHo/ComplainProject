@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorator="~{layouts/layout}">
+
+
+<div layout:fragment="content">
+    <div class="title_box clearfix">
+        <div class="ttBox">
+            <h3 class="title">알림 내역</h3>
+        </div>
+        <div class="location">
+            <ul class="clearfix">
+                <li class="first">
+                    <a href="#"><i class="la la-home"></i></a>
+                </li>
+                <li class="bdln">
+                    <strong class="active">알람내역 조회</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="cardWrap list">
+
+        <div class="tbHead">
+            <div class="clearfix">
+                <div class="pull-left">
+                    <span class="boardText">총 <strong th:text="${data.totalElements}"></strong>건</span>
+                </div>
+
+                <div class="pull-right listContBtn">
+                    <button type="button" onclick="alarmAction('confirm')" class="btn btn-sm whitegrey">
+                        <i class="icon-envelope-open"></i>
+                        읽음 표시
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="input_chk_wrap">
+                    <div class="input_chk first">
+                        <input type="checkbox" id="allListchk" name="allList">
+                        <label for="allListchk">
+                            <span class="sr_only">전체선택</span>
+                        </label>
+                    </div>
+                </th>
+                <th class="text-center">상태</th>
+                <th class="text-center">제목</th>
+                <th class="text-center">내용</th>
+                <th class="text-center">알림일시</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr th:each="item, index : ${data.content}">
+
+                <td class="input_chk_wrap">
+                    <div class="input_chk first">
+                        <input type="checkbox" id="itemChk" name="itemChk" th:value="${item.id}" th:if="${item.confirmOk == false}">
+                        <label for="itemChk">
+                            <span class="sr_only">선택</span>
+                        </label>
+                    </div>
+                </td>
+
+
+
+                <th:block th:if="${item.confirmOk == true}">
+                    <td class="enve_font text-center clgray"><i class="icon-envelope-open"></i></td>
+                </th:block>
+                <th:block th:if="${item.confirmOk == false}">
+                    <td class="enve_font text-center"><i class="icon-envelope"></i></td>
+                </th:block>
+
+
+                <td class="text-center" th:classappend="${item.confirmOk} == true ? 'clgray' : ''">
+                    <a th:href="@{/complain/complainDetail(id=${item.notiId})}"  th:text="${item.title}"></a>
+                </td>
+                <td class="text-center" th:classappend="${item.confirmOk} == true ? 'clgray' : ''">
+                    <a th:href="@{/complain/complainDetail(id=${item.notiId})}"  th:text="${item.body}"></a>
+                </td>
+                <td class="text-center" th:text="${#dates.format(item.eventDate, 'yyyy-MM-dd')}" th:classappend="${item.confirmOk} == true ? 'clgray' : ''"></td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <nav th:replace="layouts/mayPaging :: pagingFragment"></nav>
+
+
+</div>
+
+</html>
+
+<script>
+    $(document).ready(function() {
+        $("#allListchk").click(function () {
+            var checked = $(this).is(":checked");
+            if(checked) {
+                $("input:checkbox[name='itemChk']").prop("checked", true);
+            } else {
+                $("input:checkbox[name='itemChk']").prop("checked", false);
+            }
+        });
+    });
+
+    function alarmAction(action) {
+
+        var idArr = getCheckItem();
+
+        if(idArr.length === 0) {
+            alert("항목을 선택해주세요.");
+            return;
+        }
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(token)
+        console.log(header)
+        if(token && header) {
+            $(document).ajaxSend(function(event, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+        }
+
+
+        requestAjax("/alarm/readAlram", "post", {idArr : idArr}, function (res) {
+            location.reload();
+        });
+    }
+    function getCheckItem() {
+        var idArr = [];
+
+        $("input[name='itemChk']:checked").each(function() {
+            idArr.push($(this).val());
+        });
+
+        return idArr;
+    }
+
+</script>

@@ -24,8 +24,49 @@
                 </div>
 
                 <div class="utilBox clearfix">
-                    <div class="util_info">
+                    <div class="util_info" style="width: 80%; margin-top: -12px;">
+                        <nav class="gnbWrap">
+                            <ul class="gnb">
+                                <li class="with-popover" th:classappend="${pageType} == 'complain' ? 'current' " style="margin-right: 10px;">
+                                    <a href="/complain/complainList">민원관리</a>
+                                    <ul>
+                                        <li class="sub_menu">
+                                            <a href="#">민원관리</a>
+                                            <ul>
+                                                <li><a href="/complain/complainList">전체민원</a></li>
+                                                <li><a href="/complain/complainForm">민원 등록</a></li>
 
+                                                <li><a href="/complain/complainFormPopUp" onclick="window.open(this.href, '팝업창', 'width=800, height=800'); return false;">민원 등록(PopUp)</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' " style="margin-right: 10px;">
+                                        <a href="/manage/member">설정</a>
+                                        <ul>
+                                            <li><a href="/manage/member">사용자 조회</a></li>
+                                            <li><a href="/dept/deptList">부서관리</a></li>
+                                            <li><a href="/monitorManage">설문조사 관리</a></li>
+                                            <li><a href="/common/codeList">민원 종류 및 담당자 설정</a></li>
+                                        </ul>
+                                    </li>
+                                </th:block>
+
+                                <th:block sec:authorize="hasRole('ROLE_WORKER')">
+                                    <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' " style="margin-right: 10px;">
+                                        <a href="/manage/member">설정</a>
+                                        <ul>
+                                            <li><a href="/manage/member">사용자 조회</a></li>
+                                        </ul>
+                                    </li>
+                                </th:block>
+
+
+                            </ul>
+
+                        </nav>
                     </div>
                     <!--// infoUtil -->
 
@@ -78,42 +119,42 @@
         </div>
         <!-- top end -->
 
-        <div class="header_bottom">
-            <div class="inner">
-                <nav class="gnbWrap">
-                    <h2 class="sr_only">전체 메뉴</h2>
-                    <ul class="gnb">
-                        <li class="with-popover" th:classappend="${pageType} == 'complain' ? 'current' ">
-                            <a href="/complain/complainList">민원관리</a>
-                            <ul>
-                                <li class="sub_menu">
-                                    <a href="#">민원관리</a>
-                                    <ul>
-                                        <li><a href="/complain/complainList">전체민원</a></li>
-                                        <li><a href="/complain/complainForm">민원 등록</a></li>
+<!--        <div class="header_bottom">-->
+<!--            <div class="inner">-->
+<!--                <nav class="gnbWrap">-->
+<!--                    <h2 class="sr_only">전체 메뉴</h2>-->
+<!--                    <ul class="gnb">-->
+<!--                        <li class="with-popover" th:classappend="${pageType} == 'complain' ? 'current' ">-->
+<!--                            <a href="/complain/complainList">민원관리</a>-->
+<!--                            <ul>-->
+<!--                                <li class="sub_menu">-->
+<!--                                    <a href="#">민원관리</a>-->
+<!--                                    <ul>-->
+<!--                                        <li><a href="/complain/complainList">전체민원</a></li>-->
+<!--                                        <li><a href="/complain/complainForm">민원 등록</a></li>-->
 
-                                        <li><a href="/complain/complainFormPopUp" onclick="window.open(this.href, '팝업창', 'width=800, height=800'); return false;">민원 등록(PopUp)</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+<!--                                        <li><a href="/complain/complainFormPopUp" onclick="window.open(this.href, '팝업창', 'width=800, height=800'); return false;">민원 등록(PopUp)</a></li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
 
-                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-                        <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' ">
-                            <a href="/manage/member">설정</a>
-                            <ul>
-                                <li><a href="/manage/member">사용자 조회</a></li>
-                                <li><a href="/dept/deptList">부서관리</a></li>
-                                <li><a href="/monitorManage">설문조사 관리</a></li>
-                                <li><a href="/common/codeList">민원 종류 및 담당자 설정</a></li>
-                            </ul>
-                        </li>
-                        </th:block>
-                    </ul>
+<!--                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                        <li class="with-popover" th:classappend="${pageType} == 'setting' ? 'current' ">-->
+<!--                            <a href="/manage/member">설정</a>-->
+<!--                            <ul>-->
+<!--                                <li><a href="/manage/member">사용자 조회</a></li>-->
+<!--                                <li><a href="/dept/deptList">부서관리</a></li>-->
+<!--                                <li><a href="/monitorManage">설문조사 관리</a></li>-->
+<!--                                <li><a href="/common/codeList">민원 종류 및 담당자 설정</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                        </th:block>-->
+<!--                    </ul>-->
 
-                </nav>
-            </div>
-        </div>
+<!--                </nav>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
 

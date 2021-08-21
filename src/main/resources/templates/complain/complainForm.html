@@ -42,9 +42,25 @@
             <tbody>
             <tr>
                 <th><strong class="cgreen">*</strong> 민원인</th>
+
                 <td>
-                    <div class="inputBox price half2">
-                        <input type="text" name="com_name" required="" placeholder="민원인을 입력해주세요.">
+                    <div  class="inputdl">
+                        <dl>
+                            <dd>
+                                <div class="inputBox inputBtnText2">
+                                    <input type="text" name="com_name" id="com_name" required="" placeholder="민원인을 입력해주세요.">
+                                </div>
+
+                                <div class="inputBtnWrapper">
+                                    <div>
+                                        <a th:onclick="kakoLogin()">
+                                            <img src="/images/kakao_login_small.png">
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </dd>
+                        </dl>
                     </div>
                 </td>
             </tr>
@@ -57,7 +73,7 @@
                             <dd>
 
                                 <div class="inputBox inputBtnText2">
-                                    <input type="password" name="com_pwd" required placeholder="비밀번호를 입력해주세요.">
+                                    <input type="password" name="com_pwd" id="com_pwd" required placeholder="비밀번호를 입력해주세요.">
                                 </div>
 
                             </dd>
@@ -74,7 +90,7 @@
                             <dd>
 
                                 <div class="inputBox inputBtnText2">
-                                    <input type="text" name="com_phone" required placeholder="전화번호를 입력해주세요.">
+                                    <input type="text" name="com_phone" id="com_phone" required placeholder="전화번호를 입력해주세요.">
                                 </div>
 
                             </dd>
@@ -87,7 +103,7 @@
                 <th>이메일</th>
                 <td>
                     <div class="inputBox price half2">
-                        <input type="email" name="com_email" placeholder="이메일을 입력해주세요.">
+                        <input type="email" name="com_email" id="com_email" placeholder="이메일을 입력해주세요.">
                     </div>
                 </td>
             </tr>
@@ -263,5 +279,52 @@
 
             }
         }).open();
+    }
+</script>
+
+
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    Kakao.init('e18ea2186b3545ebf805974e39c251a7');
+    function kakoLogin(){
+
+        Kakao.Auth.login({
+            success: function(authObj) {
+                console.log(JSON.stringify(authObj))
+                console.log(authObj.access_token)
+                Kakao.Auth.setAccessToken(authObj.access_token);
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    data: {
+                        property_keys :["profile_nickname"]
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        Kakao.Auth.getStatusInfo(function(res) {
+                            console.log(res)
+                            $("#com_name").val(res.user.properties.nickname)
+                            $("#com_email").val(res.user.kakao_account.email)
+                            $("#com_phone").val(res.user.id)
+                            $("#com_pwd").val(res.user.id)
+
+                            $("#com_name").attr("readonly",true)
+                            $("#com_email").attr("readonly",true)
+                            $("#com_phone").attr("readonly",true)
+                            $("#com_pwd").attr("readonly",true)
+
+
+                        });
+
+                    },
+                    fail: function (error) {
+                        console.log(error)
+                    },
+                })
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err))
+            },
+        })
     }
 </script>

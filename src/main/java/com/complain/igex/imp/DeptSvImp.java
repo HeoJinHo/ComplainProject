@@ -46,4 +46,9 @@ public class DeptSvImp implements DeptSv
     {
         return mongoTemplate.findAll(Dept.class);
     }
+
+    @Override
+    public Dept getOne(String id) {
+        return mongoTemplate.findById(id, Dept.class);
+    }
 }

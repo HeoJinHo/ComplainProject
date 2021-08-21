@@ -7,6 +7,14 @@
 
             <li class="page-item">
                 <th:block th:if="${!data.first}">
+                    <a th:onclick="|javascript:onPage(0)|" class="page-link">
+                        <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true" style='line-height: 32px;'></i></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </th:block>
+
+
+                <th:block th:if="${!data.first}">
                     <a th:onclick="|javascript:onPage('${data.number - 1}')|" class="page-link">
                         <span aria-hidden="true"><i class="fa fa-angle-left" aria-hidden="true" style='line-height: 32px;'></i></span>
                         <span class="sr-only">Previous</span>
@@ -39,6 +47,14 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </th:block>
+
+                <th:block th:if="${!data.last}">
+                    <a th:onclick="|javascript:onPage('${data.totalPages - 1}')|" aria-label="Next">
+                        <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true" style='line-height: 32px;'></i></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </th:block>
+
             </li>
         </ul>
     </th:block>

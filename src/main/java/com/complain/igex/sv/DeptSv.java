@@ -17,4 +17,6 @@ public interface DeptSv
 
     List<Dept> searchDept();
 
+    Dept getOne(String id);
+
 }

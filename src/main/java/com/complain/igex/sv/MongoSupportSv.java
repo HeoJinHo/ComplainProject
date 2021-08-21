@@ -7,7 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Update;
 
-import javax.management.Query;
+import org.springframework.data.mongodb.core.query.Query;
+import java.util.List;
 
 public interface MongoSupportSv
 {
@@ -25,6 +26,12 @@ public interface MongoSupportSv
      * */
     <T> Page<T> makePaging2 (Class<T> entityClass, Pageable pageable, SearchDataForMongo2 searchData);
 
-
+    /**
+     * 검색한 리스트를 리턴한다.
+     * @param entityClass 엔트리 클래스
+     * @param q 조건
+     * @return 검색 리스트
+     */
+    <T> List<T> getAllList (Class<T> entityClass, Query q);
 
 }

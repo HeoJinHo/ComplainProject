@@ -60,6 +60,14 @@ public class MongoSupportSvImp implements MongoSupportSv
         return new PageImpl(mongoTemplate.find (q, entityClass), pageable, totalCnt);
     }
 
+    @Override
+    public <T> List<T> getAllList (Class<T> entityClass, Query q)
+    {
+        q.with(Sort.by(Sort.Direction.DESC, "reg_date"));
+
+        return mongoTemplate.find (q, entityClass);
+    }
+
 
 
 }

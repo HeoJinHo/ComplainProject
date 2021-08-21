@@ -59,8 +59,8 @@
                             <div class="selectBox">
                                 <select id="com_state" name = 'useYn'>
                                     <option value="">전체</option>
-                                    <option value="USE">사용</option>
-                                    <option value="NONE_USE">미사용</option>
+                                    <option th:each="colorOpt : ${T(com.complain.igex.model.cenum.UseYn).values()}"
+                                            th:value="${colorOpt}" th:text="${colorOpt.value}"></option>
                                 </select>
                             </div>
                         </div>
@@ -108,15 +108,29 @@
                 <td class="text-center" th:text="${item.useYn.value}"></td>
                 <td class="text-center" th:text="${#dates.format(item.reg_date, 'yyyy-MM-dd')}"></td>
 
+<!--                <td class="text-center">-->
+<!--                    <div class="tdBtnWrap">-->
+<!--                        <a class="btn btn-xs btn-block">상세</a>-->
+<!--                    </div>-->
+<!--                </td>-->
                 <td class="text-center">
+
                     <div class="tdBtnWrap">
-                        <a class="btn btn-xs btn-block">상세</a>
+                        <a class="btn btn-xs lblue" style="background-color: #0e59c5; color: white; opacity: 0.7; " th:attr="onclick=|stateUseYn('${item.id}', 'USE')|">사용</a>
+                        <a class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;" th:attr="onclick=|stateUseYn('${item.id}', 'NONE_USE')|">미사용</a>
                     </div>
-                </td>
-                <td class="text-center">
-                    <div class="tdBtnWrap">
-                        <a class="btn btn-xs lred" style="background-color: red; color: white; opacity: 0.7;">삭제</a>
-                    </div>
+
+<!--                    <div class="tdBtnWrap">-->
+<!--                        -->
+<!--                    </div>-->
+
+
+
+<!--                    <select name="color">-->
+<!--                        <option th:each="colorOpt : ${T(com.complain.igex.model.cenum.UseYn).values()}"-->
+<!--                                th:value="${colorOpt}" th:text="${colorOpt.value}"></option>-->
+<!--                    </select>-->
+
                 </td>
             </tr>
             <tr th:if="${data.content.size() == 0}">
@@ -135,3 +149,11 @@
 </div>
 
 </html>
+
+<script>
+    function stateUseYn(id, state)
+    {
+        location.href = "/common/codeState?id="+id+"&state="+state;
+    }
+
+</script>

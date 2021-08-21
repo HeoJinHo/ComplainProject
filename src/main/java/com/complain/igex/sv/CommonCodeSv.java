@@ -16,4 +16,6 @@ public interface CommonCodeSv
 
     void codeInsert(CommonCode commonCode);
 
+    void codeChangeState(String id, String state);
+
 }

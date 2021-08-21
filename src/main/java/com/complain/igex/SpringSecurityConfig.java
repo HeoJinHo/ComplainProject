@@ -44,6 +44,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
                         "/home2",
                         "/rest/**",
                         "/rest2/**",
+                        "/kakao/**",
                         "/error**").permitAll()
                 // ROLE_USER, ROLE_ADMIN으로 권한 분리 유알엘 정의
                 .antMatchers("/**").access("ROLE_USER")

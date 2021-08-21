@@ -1,6 +1,7 @@
 package com.complain.igex.common;
 
 import com.complain.igex.model.Member;
+import com.complain.igex.model.cenum.UseYn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -34,6 +35,8 @@ public class AuthProvider implements AuthenticationProvider {
         String id = authentication.getName();
         Criteria criteria = new Criteria("_id");
         criteria.is(id);
+        criteria.and("useYn").is(UseYn.USE);
+
 
         Query query = new Query(criteria);
         Member member = mongoTemplate.findOne(query, Member.class);

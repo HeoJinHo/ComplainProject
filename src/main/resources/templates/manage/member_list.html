@@ -34,7 +34,7 @@
             <form class="search_filter" id="searchForm" action="/manage/member" method="get">
                 <input type="hidden" id="page" name="page" value="">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="formEleWrap">
                             <label class="label_tit" for="p_member_id">사용자ID</label>
                             <div class="inputBox">
@@ -45,7 +45,7 @@
                     </div>
 
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="formEleWrap">
                             <label class="label_tit" for="p_member_name">사용자 이름</label>
                             <div class="inputBox">
@@ -53,6 +53,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-2">
+                        <div class="formEleWrap">
+                            <label class="label_tit" for="com_state">사용유무</label>
+                            <div class="selectBox">
+                                <select id="com_state" name = 'useYn'>
+                                    <option value="">전체</option>
+                                    <option th:each="colorOpt : ${T(com.complain.igex.model.cenum.UseYn).values()}"
+                                            th:value="${colorOpt}" th:text="${colorOpt.value}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <nav th:replace="layouts/dateSearch :: dateSearchFragment"></nav>
                 </div>
 
@@ -123,3 +137,11 @@
 </div>
 
 </html>
+<script>
+
+    $(document).ready(function () {
+        $("#com_state").val("[[${searchData.useYn}]]");
+
+    });
+
+</script>

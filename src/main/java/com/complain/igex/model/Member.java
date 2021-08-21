@@ -1,6 +1,7 @@
 package com.complain.igex.model;
 
 import com.complain.igex.model.cenum.MemberState;
+import com.complain.igex.model.cenum.UseYn;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,8 @@ public class Member {
     private MemberState state;
 
     private String auth;
+
+    private UseYn useYn;
 
     private List<Map> top_menu;
 

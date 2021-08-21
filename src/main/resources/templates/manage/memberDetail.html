@@ -88,6 +88,27 @@
             </tr>
 
             <tr>
+                <th>사용유무</th>
+                <td>
+                    <div class="mgt10" id="serviceChargeSettingArea2" style="display: block;">
+                        <div class="table-cell">
+                            <div class="table-cell inline">
+                                <div class="selectWrap sm">
+                                    <div class="selectBox" >
+                                        <select id="com_state" name = 'useYn'>
+                                            <option th:each="colorOpt : ${T(com.complain.igex.model.cenum.UseYn).values()}"
+                                                    th:value="${colorOpt}" th:text="${colorOpt.value}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
                 <th>부서</th>
                 <td>
                     <div  class="inputdl">
@@ -129,6 +150,7 @@
 <script>
     $(document).ready(function () {
         $("#auth").val("[[${item.auth}]]");
+        $("#com_state").val("[[${item.useYn}]]");
     });
 
 

@@ -8,6 +8,7 @@ import com.complain.igex.sv.CommonCodeSv;
 import com.complain.igex.sv.ComplainSv;
 import com.complain.igex.sv.MonitorSv;
 import com.complain.igex.sv.NotifySv;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/complain")
 public class ComplainController {
 
@@ -36,13 +38,6 @@ public class ComplainController {
     private final CommonCodeSv commonCodeSv;
 
     private final NotifySv notifySv;
-
-    public ComplainController(ComplainSv complainSv, MonitorSv monitorSv, CommonCodeSv commonCodeSv, NotifySv notifySv) {
-        this.complainSv = complainSv;
-        this.monitorSv = monitorSv;
-        this.commonCodeSv = commonCodeSv;
-        this.notifySv = notifySv;
-    }
 
 
     @GetMapping("/myComplainList")
@@ -67,6 +62,13 @@ public class ComplainController {
     }
 
 
+    /**
+     * 민원 목록 권한별 조회 결과 다름
+     * @param member
+     * @param pageable
+     * @param seachData
+     * @return
+     */
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER', 'ROLE_USER')")
     @GetMapping("/complainList")
     public ModelAndView complainList

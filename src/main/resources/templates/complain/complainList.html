@@ -171,6 +171,15 @@
                         <i class="la la-plus"></i>민원 등록
                     </a>
                 </div>
+                <div class="pull-right listContBtn">
+                    <a th:onclick="saveExcel()" class="btn btn-sm whitegrey">
+                        <i class="la la-download"></i>엑셀다운로드
+                    </a>
+
+                </div>
+
+
+
             </div>
         </div>
 
@@ -226,7 +235,8 @@
 </div>
 
 </html>
-
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
     function stateChange(state)
     {
@@ -242,6 +252,16 @@
             location.href = "/complain/complainDelete?id="+id;
         }
     }
+
+
+
+
+    function saveExcel ()
+    {
+        location.href = "/excel/complain?" + $('#searchForm').serialize ();
+    }
+
+
 </script>
 
 <script>
@@ -256,5 +276,7 @@
             case "REJECT" : $("#rejectStateTab").css("background", "#ffffe7"); break;
         }
     });
+
+
 
 </script>

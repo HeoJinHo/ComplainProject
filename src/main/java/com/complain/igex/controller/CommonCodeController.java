@@ -53,4 +53,10 @@ public class CommonCodeController {
     }
 
 
+    @GetMapping("/codeState")
+    public String codeStateChange(String id, String state){
+        commonCodeSv.codeChangeState(id, state);
+        return "redirect:/common/codeList";
+    }
+
 }

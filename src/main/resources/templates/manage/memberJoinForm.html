@@ -103,6 +103,47 @@
         </td>
       </tr>
 
+      <tr>
+        <th>사용유무</th>
+        <td>
+          <div class="mgt10" id="serviceChargeSettingArea2" style="display: block;">
+            <div class="table-cell">
+              <div class="table-cell inline">
+                <div class="selectWrap sm">
+                  <div class="selectBox" >
+                    <select id="com_state" name = 'useYn'>
+                      <option th:each="colorOpt : ${T(com.complain.igex.model.cenum.UseYn).values()}"
+                              th:value="${colorOpt}" th:text="${colorOpt.value}"></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>부서</th>
+        <td>
+          <div  class="inputdl">
+            <dl>
+              <dd>
+                <div class="inputBox inputBtnText2">
+                  <input type="text" name="member_deptNm" ondblclick="openDeptPopup()" readonly id="member_deptNm" maxlength="20" placeholder="부서를 지정해주세요.">
+                  <input type="hidden" name="member_dept" id="member_dept">
+                </div>
+                <div class="inputBtnWrapper">
+                  <div class="inputBtnWrap inputBtnWrap2">
+                    <button type="button" class="inputBtn" onclick="openDeptPopup()">부서 선택</button>
+                  </div>
+                </div>
+              </dd>
+            </dl>
+          </div>
+        </td>
+      </tr>
+
 
 <!--      <tr>-->
 <!--        <th>부서</th>-->
@@ -133,7 +174,35 @@
       <span> <button type="submit" class="btn blue-sub">저장</button> </span>
     </div>
   </form>
-
+  <div id="deptPopup"></div>
 </div>
 </html>
 
+
+<script>
+  /**
+   * 부서선택 팝업 오픈
+   * @param memberID
+   */
+  var openDeptPopup = function (param) {
+    var url = "/dialog/dept";
+    if(param !== undefined)
+      url += param;
+
+    $("#deptPopup").load(url, function () {
+      $("#deptPopup > .modal-backdrop").addClass("in");
+      $("#deptBrower").show();
+    });
+  };
+
+
+
+  /**
+   * 부서선택 팝업 닫기
+   */
+  var closeDeptPop = function () {
+    $('#deptPopup').empty();
+  };
+
+
+</script>

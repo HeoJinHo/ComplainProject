@@ -1,6 +1,7 @@
 package com.complain.igex.searchData;
 
 
+import com.complain.igex.model.cenum.UseYn;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,8 @@ public class MemberSearchData extends SearchDataForMongo
     String memberID;
     String member_name;
     String dateRange;
+    UseYn useYn;
+    String member_dept;
 
     @Override
     public Query makeQuery() {
@@ -36,6 +39,12 @@ public class MemberSearchData extends SearchDataForMongo
 
         if (!StringUtils.isEmpty(member_name))
             criteria = makeCriteria(criteria, "member_name").regex(member_name);
+
+        if (useYn != null)
+            criteria = makeCriteria(criteria, "useYn").is(useYn);
+
+        if (!StringUtils.isEmpty(member_dept))
+            criteria = makeCriteria(criteria, "member_dept").is(member_dept);
 
         criteria = regDateWhere (criteria, "reg_date");
 

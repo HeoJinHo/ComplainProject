@@ -66,7 +66,21 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+
+<!--            <th:block sec:authorize="hasAnyRole('ROLE_WORKER,'ROLE_USER')">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <input th:value="${item.auth}" type="text" name="auth">-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </th:block>-->
+
+
+
+            <input th:value="${item.auth}" type="hidden" name="auth" sec:authorize="hasRole('ROLE_USER')">
+            <input th:value="${item.auth}" type="hidden" name="auth" sec:authorize="hasRole('ROLE_WORKER')">
+
+            <tr sec:authorize="hasRole('ROLE_ADMIN')">
                 <th>권한</th>
                 <td>
                     <div class="mgt10" id="serviceChargeSettingArea" style="display: block;">

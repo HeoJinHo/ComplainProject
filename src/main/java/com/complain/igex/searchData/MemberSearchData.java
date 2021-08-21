@@ -18,7 +18,6 @@ import org.thymeleaf.util.StringUtils;
 @EqualsAndHashCode(callSuper = true)
 public class MemberSearchData extends SearchDataForMongo
 {
-
     String memberID;
     String member_name;
     String dateRange;

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/manage")
 @RequiredArgsConstructor
@@ -37,9 +39,14 @@ public class MemberManageController {
     {
         ModelAndView mv = new ModelAndView();
         if("ROLE_WORKER".equals(member.getAuth())) {
-            Dept one = deptSv.getOne(member.getMember_dept());
-            searchData.setMember_dept(one.getId());
+            Optional<Dept> one = Optional.ofNullable(deptSv.getOne(member.getMember_dept()));
+            if(one.isPresent())
+                searchData.setMember_dept(one.get().getId());
+            else
+                searchData.setMemberID(member.getMember_id());
         }
+
+
 
         mv.setViewName("manage/member_list");
         mv.addObject("pageType", "setting");
@@ -65,6 +72,16 @@ public class MemberManageController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("manage/memberDetail");
         mv.addObject("item", memberSv.selectOne(id));
+        return mv;
+    }
+
+
+    @GetMapping("/myPage")
+    public ModelAndView myPage(@AuthenticationPrincipal Member member){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("manage/memberDetail");
+        mv.addObject("item", memberSv.selectOne(member.getMember_id()));
+
         return mv;
     }
 

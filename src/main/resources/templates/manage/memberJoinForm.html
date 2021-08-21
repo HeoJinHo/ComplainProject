@@ -91,7 +91,7 @@
                 <div class="selectWrap sm">
                   <div class="selectBox" >
                     <select id="auth" name="auth">
-                      <option value="ROLE_ADMIN">관리자</option>
+                      <option value="ROLE_ADMIN" sec:authorize="hasRole('ROLE_ADMIN')">관리자</option>
                       <option value="ROLE_WORKER">매니저</option>
                       <option value="ROLE_USER" selected>사용자</option>
                     </select>
